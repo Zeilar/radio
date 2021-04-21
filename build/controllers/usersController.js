@@ -80,11 +80,13 @@ function getUsers(req, res) {
                         delete user.password;
                         return user;
                     });
-                    return [2 /*return*/, res.json(users)];
+                    res.json(users);
+                    return [2 /*return*/];
                 case 2:
                     e_2 = _a.sent();
                     console.error(e_2);
-                    return [2 /*return*/, res.sendStatus(500)];
+                    res.sendStatus(500);
+                    return [2 /*return*/];
                 case 3: return [2 /*return*/];
             }
         });
@@ -99,7 +101,8 @@ function getUserById(req, res) {
                 case 0:
                     id = Number(req.params.id);
                     if (!id) {
-                        return [2 /*return*/, res.sendStatus(400)];
+                        res.sendStatus(400);
+                        return [2 /*return*/];
                     }
                     _a.label = 1;
                 case 1:
@@ -108,13 +111,16 @@ function getUserById(req, res) {
                 case 2:
                     user = _a.sent();
                     if (!user) {
-                        return [2 /*return*/, res.sendStatus(404)];
+                        res.sendStatus(404);
+                        return [2 /*return*/];
                     }
-                    return [2 /*return*/, res.json(user)];
+                    res.json(user);
+                    return [2 /*return*/];
                 case 3:
                     e_3 = _a.sent();
                     console.error(e_3);
-                    return [2 /*return*/, res.sendStatus(500)];
+                    res.sendStatus(500);
+                    return [2 /*return*/];
                 case 4: return [2 /*return*/];
             }
         });
@@ -129,7 +135,8 @@ function register(req, res) {
                 case 0:
                     _a = req.body, username = _a.username, email = _a.email, password = _a.password;
                     if (!username || !email || !password) {
-                        return [2 /*return*/, res.sendStatus(400)];
+                        res.sendStatus(400);
+                        return [2 /*return*/];
                     }
                     _b.label = 1;
                 case 1:
@@ -138,7 +145,8 @@ function register(req, res) {
                 case 2:
                     user = _b.sent();
                     if (user) {
-                        return [2 /*return*/, res.sendStatus(422)];
+                        res.sendStatus(422);
+                        return [2 /*return*/];
                     }
                     return [4 /*yield*/, bcrypt_1["default"].hash(password, 10)];
                 case 3:
@@ -154,12 +162,13 @@ function register(req, res) {
                     createdUser = _b.sent();
                     delete createdUser.password;
                     req.session.user = createdUser;
-                    console.log(req.session);
-                    return [2 /*return*/, res.sendStatus(200)];
+                    res.sendStatus(200);
+                    return [2 /*return*/];
                 case 5:
                     e_4 = _b.sent();
                     console.error(e_4);
-                    return [2 /*return*/, res.sendStatus(500)];
+                    res.sendStatus(500);
+                    return [2 /*return*/];
                 case 6: return [2 /*return*/];
             }
         });
@@ -175,13 +184,15 @@ function updateUser(req, res) {
                     id = Number(req.params.id);
                     _a = req.body, username = _a.username, password = _a.password;
                     if (!id || !username || !password) {
-                        return [2 /*return*/, res.sendStatus(400)];
+                        res.sendStatus(400);
+                        return [2 /*return*/];
                     }
                     return [4 /*yield*/, findOrFail(id)];
                 case 1:
                     code = (_b.sent()).code;
                     if (code !== 200) {
-                        return [2 /*return*/, res.sendStatus(code)];
+                        res.sendStatus(code);
+                        return [2 /*return*/];
                     }
                     _b.label = 2;
                 case 2:
@@ -192,11 +203,13 @@ function updateUser(req, res) {
                         })];
                 case 3:
                     _b.sent();
-                    return [2 /*return*/, res.sendStatus(200)];
+                    res.sendStatus(200);
+                    return [2 /*return*/];
                 case 4:
                     e_5 = _b.sent();
                     console.error(e_5);
-                    return [2 /*return*/, res.sendStatus(500)];
+                    res.sendStatus(500);
+                    return [2 /*return*/];
                 case 5: return [2 /*return*/];
             }
         });
@@ -226,16 +239,19 @@ function deleteUser(req, res) {
                 case 3:
                     user = _a.sent();
                     if (user === null) {
-                        return [2 /*return*/, res.sendStatus(404)];
+                        res.sendStatus(404);
+                        return [2 /*return*/];
                     }
                     return [4 /*yield*/, prisma.user["delete"]({ where: { id: id } })];
                 case 4:
                     _a.sent();
-                    return [2 /*return*/, res.sendStatus(200)];
+                    res.sendStatus(200);
+                    return [2 /*return*/];
                 case 5:
                     e_6 = _a.sent();
                     console.error(e_6);
-                    return [2 /*return*/, res.sendStatus(500)];
+                    res.sendStatus(500);
+                    return [2 /*return*/];
                 case 6: return [2 /*return*/];
             }
         });
