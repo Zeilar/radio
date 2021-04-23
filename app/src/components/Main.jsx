@@ -2,11 +2,13 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled, { css } from 'styled-components';
 import Home from "./views/Home";
 import Channel from "./views/Channel";
+import Navbar from "./Navbar";
 
 export default function Main() {
     return (
-        <Wrapper>
-            <Router>
+        <Router>
+            <Wrapper>
+                <Navbar />
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/channel/:id/:name?" exact component={Channel} />
@@ -14,8 +16,8 @@ export default function Main() {
                         404
                     </Route>
                 </Switch>
-            </Router>
-        </Wrapper>
+            </Wrapper>
+        </Router>
     );
 }
 

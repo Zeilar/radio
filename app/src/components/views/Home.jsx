@@ -24,11 +24,6 @@ export default function Home() {
             return pagination.totalpages > pageParam ? pagination.page + 1 : false;
         }
 
-        // console.log('pagination', pagination);
-        // console.log('pageParam', pageParam);
-        // console.log('nextPage', pagination.totalpages > pageParam ? pageParam + 1 : false);
-        // console.log('calculateNextPage', calculateNextPage());
-        // console.log('-');
         return { data: channels, nextPage: calculateNextPage() };
     }, { getNextPageParam: lastQuery => lastQuery.nextPage });
 
@@ -64,11 +59,6 @@ export default function Home() {
 
     return (
         <Wrapper>
-            <Header as={Row} justify="center" align="center">
-                <Title>Angelin</Title>
-                <TitleIcon />
-                <Title>Radio</Title>
-            </Header>
             {/* {loading && <Loader message="Preparing your meals" />} */}
             <Channels>
                 {isSuccess && data.pages.map(page => (
@@ -96,21 +86,4 @@ const Channels = styled.div`
     display: grid;
     grid-gap: 15px;
     width: 500px;
-`;
-
-const Header = styled.header`
-    padding: 60px;
-`;
-
-const Title = styled(H1)`
-    color: rgb(${({ theme }) => theme.color.textPrimary});
-    font-family: Libre Franklin;
-    font-weight: normal;
-`;
-
-const TitleIcon = styled(Icon).attrs({ path: mdiRadio })`
-    color: rgb(${({ theme }) => theme.color.bodyLight});
-    width: 4rem;
-    height: 4rem;
-    margin: 0 1rem;
 `;

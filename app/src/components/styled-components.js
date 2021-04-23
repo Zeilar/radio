@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components';
 
-const flexbox = css(({ justify, align, block }) => css`
+export const flexbox = css(({ justify, align, block }) => css`
     display: flex;
     justify-content: ${justify};
     align-items: ${align};
     width: ${block ? "100%" : null};
 `);
 
-const header = css(({ theme }) => css`
+export const header = css(({ theme }) => css`
     color: rgb(${theme.color.textPrimary});
     font-weight: bold;
 `);
@@ -17,12 +17,10 @@ export const Button = styled.button(({ theme }) => css`
     color: rgb(${theme.color.textSecondary});
     background-color: rgb(${theme.color.brand});
     border: 0;
-    &:hover:not([disabled]) {
-        color: rgb(${theme.color.link});
-    }
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
     &[disabled] {
         cursor: default;
-        opacity: 0.35;
+        opacity: 0.5;
     }
 `);
 
