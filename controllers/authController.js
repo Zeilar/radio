@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcrypt';
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const bcrypt = require('bcrypt');
 
-export async function authenticate(req: any, res: any): Promise<any> {
+async function authenticate(req, res) {
     const userSession = req.session.user;
     if (!userSession) {
         return res.sendStatus(401);
@@ -13,7 +13,7 @@ export async function authenticate(req: any, res: any): Promise<any> {
     res.json(user);
 }
 
-export function logout(req: any, res: any): void {
+function logout(req, res) {
     try {
         delete req.session.user;
         res.sendStatus(200);
@@ -22,16 +22,14 @@ export function logout(req: any, res: any): void {
     }
 }
 
-export async function login(req: any, res: any): Promise<void> {
+async function login(req, res) {
     if (req.session.user) {
-        res.sendStatus(405);
-        return;
+        return res.sendStatus(405);
     }
 
     const { username, password } = req.body;
     if (!username || !password) {
-        res.sendStatus(400);
-        return;
+        return res.sendStatus(400);
     }
 
     const user = await prisma.user.findUnique({ where: { username } });
@@ -52,3 +50,9 @@ export async function login(req: any, res: any): Promise<void> {
         res.json({ message: "Incorrect password" });
     }
 }
+
+module.exports = {
+    logout,
+    login,
+    authenticate,
+};

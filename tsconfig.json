@@ -1,9 +1,0 @@
-{
-    "compilerOptions": {
-        "rootDir": "./src",
-        "outDir": "./build",
-        "watch": true,
-        "types": ["node"],
-        "esModuleInterop": true
-    }
-}

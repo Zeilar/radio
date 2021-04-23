@@ -1,13 +1,10 @@
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcrypt';
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const bcrypt = require('bcrypt');
 
-interface findOrFailType {
-    code: number,
-    user?: object,
-}
-
-export async function findOrFail(id: number): Promise<findOrFailType> {
+async function findOrFail(id) {
+    id = Number(id);
+    if (!id) return { code: 400 };
     try {
         const user = await prisma.user.findUnique({ where: { id } });
         if (user === null) {
@@ -19,54 +16,49 @@ export async function findOrFail(id: number): Promise<findOrFailType> {
     }
 }
 
-export async function getUsers(req: any, res: any): Promise<void> {
+async function getUsers(req, res) {
     try {
         let users = await prisma.user.findMany();
-        users = users.map((user: any) => {
+        users = users.map(user => {
             delete user.password;
             return user;
         });
-        res.json(users);
-        return;
+        return res.json(users);
     } catch (e) {
         console.error(e);
-        res.sendStatus(500);
-        return;
+        return res.sendStatus(500);
     }
 }
 
-export async function getUserById(req: any, res: any): Promise<void> {
+async function getUserById(req, res) {
     const id = Number(req.params.id);
     if (!id) {
-        res.sendStatus(400);
-        return;
+        return res.sendStatus(400);
     }
     try {
-        const user = await prisma.user.findUnique({ where: { id } });
+        const user = await prisma.user.findUnique({
+            where: { id: id },
+            include: { recipes: true },
+        });
         if (!user) {
-            res.sendStatus(404);
-            return;
+            return res.sendStatus(404);
         }
-        res.json(user);
-        return;
+        return res.json(user);
     } catch (e) {
         console.error(e);
-        res.sendStatus(500);
-        return;
+        return res.sendStatus(500);
     }
 }
 
-export async function register(req: any, res: any): Promise<void> {
-    const { username, email, password } = req.body;
-    if (!username || !email || !password) {
-        res.sendStatus(400);
-        return;
+async function register(req, res) {
+    const { username, password } = req.body;
+    if (!username || !password) {
+        return res.sendStatus(400);
     }
     try {
         const user = await prisma.user.findUnique({ where: { username } });
         if (user) {
-            res.sendStatus(422);
-            return;
+            return res.sendStatus(422);
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -74,34 +66,29 @@ export async function register(req: any, res: any): Promise<void> {
         const createdUser = await prisma.user.create({
             data: {
                 username,
-                email,
                 password: hashedPassword,
             },
         });
         delete createdUser.password;
         req.session.user = createdUser;
-        res.sendStatus(200);
-        return;
+        return res.sendStatus(200);
     } catch (e) {
         console.error(e);
-        res.sendStatus(500);
-        return;
+        return res.sendStatus(500);
     }
 }
 
-export async function updateUser(req: any, res: any): Promise<void> {
+async function updateUser(req, res) {
     const id = Number(req.params.id);
     const { username, password } = req.body;
 
     if (!id || !username || !password) {
-        res.sendStatus(400);
-        return;
+        return res.sendStatus(400);
     }
     
     const { code } = await findOrFail(id);
     if (code !== 200) {
-        res.sendStatus(code);
-        return;
+        return res.sendStatus(code);
     }
 
     try {
@@ -109,16 +96,14 @@ export async function updateUser(req: any, res: any): Promise<void> {
             where: { id },
             data: {},
         });
-        res.sendStatus(200);
-        return;
+        return res.sendStatus(200);
     } catch (e) {
         console.error(e);
-        res.sendStatus(500);
-        return;
+        return res.sendStatus(500);
     }
 }
 
-export async function deleteUser(req: any, res: any): Promise<void> {
+async function deleteUser(req, res) {
     const id = Number(req.params.id);
     if (!id) {
         return res.sendStatus(400);
@@ -132,15 +117,20 @@ export async function deleteUser(req: any, res: any): Promise<void> {
     try {
         const user = await prisma.user.findUnique({ where: { id } });
         if (user === null) {
-            res.sendStatus(404);
-            return;
+            return res.sendStatus(404);
         }
         await prisma.user.delete({ where: { id } });
-        res.sendStatus(200);
-        return;
+        return res.sendStatus(200);
     } catch (e) {
         console.error(e);
-        res.sendStatus(500);
-        return;
+        return res.sendStatus(500);
     }
 }
+
+module.exports = {
+    getUsers,
+    getUserById,
+    register,
+    updateUser,
+    deleteUser,
+};

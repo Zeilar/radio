@@ -1,12 +1,11 @@
-import path = require("path");
-import express from 'express';
-import cors from 'cors';
-import session from 'express-session';
-import userRoutes from './routes/userRoutes';
-import authRoutes from './routes/authRoutes';
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const session = require('express-session');
 
-import { config } from 'dotenv';
-config();
+const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -18,7 +17,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // One week
 }));
 
 // Controller routes
