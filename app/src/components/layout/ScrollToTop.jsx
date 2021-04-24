@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { Button } from './styled-components';
+import { Button } from '../styled-components';
 import { mdiChevronDown } from '@mdi/js';
 import Icon from '@mdi/react';
 
@@ -36,7 +36,7 @@ const ButtonWrapper = styled(Button)`
     bottom: 50px;
     padding: 5px;
     z-index: 100;
-    transition: opacity 0.1s ease-in, transform 0.25s ease-in;
+    transition: opacity 0.1s ease-in, transform 0.2s ease-in;
     ${({ visible }) => !visible && css`
         opacity: 0;
         transform: scale(0.5);

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { Row, flexbox, Container } from './styled-components';
+import { Row, flexbox, Container } from '../styled-components';
 import { mdiRadio } from '@mdi/js';
 import Icon from '@mdi/react';
 

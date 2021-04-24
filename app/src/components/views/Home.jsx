@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ChannelThumb from '../ChannelThumb';
 import { Button, Col, Container } from '../styled-components';
-import Loader from '../Loader';
+import { Loader } from '../layout';
 import { useInfiniteQuery } from 'react-query';
 
 export default function Home() {

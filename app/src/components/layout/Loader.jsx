@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mdiRadio } from '@mdi/js';
 import Icon from '@mdi/react';
-import { Col, Row, H3 } from './styled-components';
+import { Col, H3 } from '../styled-components';
 
 export default function Loader({ loading, message = null }) {
     if (loading === false) {
