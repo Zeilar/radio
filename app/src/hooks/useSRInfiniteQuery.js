@@ -7,23 +7,23 @@ export default function useSRInfiniteQuery(name = "", url = "", ...queryParams) 
             return "";
         }
 
-        // Parse from { key: value } to `key=value`
-        params = params.map(param => (
-            `${Object.keys(param)[0]}=${Object.values(param)[0]}`
-        )); 
+        // Parse { key: value } to `key=value` strings
+        params = params.map(param => Object.entries(param).map(([key, val]) => `${key}=${val}`).join("&"));
 
         return `&${params.join("&")}`; // Parse to URI query parameters
     }
     
     const query = useInfiniteQuery(name, async ({ pageParam = 1 }) => {
         const response = await fetch(`${url}?format=json${parseQueryParams(queryParams)}&page=${pageParam}`);
-        const data = await response.json();
+        const data     = await response.json();
         
         function getNextPage() {
             if (!pageParam || !data.pagination) {
                 return false;
             }
-            return data.pagination.totalpages > pageParam ? data.pagination.page + 1 : false;
+            return data.pagination.totalpages > pageParam
+                ? data.pagination.page + 1
+                : false;
         }
 
         return { data, nextPage: getNextPage() };
@@ -39,7 +39,7 @@ export default function useSRInfiniteQuery(name = "", url = "", ...queryParams) 
                 scrollPosition = window.innerHeight + window.scrollY,
 				bottomPosition = document.body.offsetHeight;
             
-			if (scrollPosition >= bottomPosition * 0.8) {
+			if (scrollPosition >= (bottomPosition * 0.8)) {
 				query.fetchNextPage();
 			}
         }

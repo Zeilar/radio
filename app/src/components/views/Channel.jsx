@@ -11,7 +11,7 @@ export default function Channel({ match }) {
     const programsQuery = useSRInfiniteQuery(
         `channel/${id}/programs`,
         `http://api.sr.se/api/v2/programs/index`,
-        { channelid: id }, { size: 30 },
+        { channelid: id, size: 30 },
     );
     const channelQuery = useFetch(`http://api.sr.se/api/v2/channels/${id}?format=json`);
 
