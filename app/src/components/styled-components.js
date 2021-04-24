@@ -24,9 +24,10 @@ export const header = css(({ theme }) => css`
 
 export const Container = styled.div`
     ${flexbox}
-    padding: 0 15px;
+    padding: 30px;
     max-width: calc(100% - 30px);
     width: 1000px;
+    margin: auto;
     ${({ row, col }) => css`
         flex-direction: ${col && "column"};
         flex-direction: ${row && "row"};

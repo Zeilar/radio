@@ -24,6 +24,7 @@ export default function Loader({ loading, message = null }) {
 const Wrapper = styled(Col)`
     color: rgb(${({ theme }) => theme.color.textPrimary});
     padding: 5px;
+    margin: 30px;
 `;
 
 const IconOutlined = styled(Icon).attrs({ path: mdiRadio })`

@@ -32,7 +32,8 @@ const Header = styled(Row).attrs({ justify: "center" })`
 `;
 
 const Nav = styled(Container)`
-    
+    padding-top: 0;
+    padding-bottom: 0;
 `;
 
 const Navlist = styled.ul.attrs({ align: "center" })`
