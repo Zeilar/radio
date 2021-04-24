@@ -1,20 +1,22 @@
 import { useEffect } from 'react';
 import { useInfiniteQuery } from 'react-query';
 
-export default function useSRInfiniteQuery(name, url, ...queryParams) {
-    const query = useInfiniteQuery(name, async ({ pageParam = 1 }) => {
-        if (queryParams.length > 0) {
-            // Parse from { key: value } to `key=value`
-            queryParams = queryParams.map(param => (
-                `${Object.keys(param)[0]}=${Object.values(param)[0]}`
-            )); 
-
-            queryParams = `&${queryParams.join("&")}`; // Parse to URI query parameters
-        } else {
-            queryParams = "";
+export default function useSRInfiniteQuery(name = "", url = "", ...queryParams) {
+    function parseQueryParams(params = []) {
+        if (params.length <= 0) {
+            return "";
         }
 
-        const response = await fetch(`${url}?format=json${queryParams}&page=${pageParam}`);
+        // Parse from { key: value } to `key=value`
+        params = params.map(param => (
+            `${Object.keys(param)[0]}=${Object.values(param)[0]}`
+        )); 
+
+        return `&${params.join("&")}`; // Parse to URI query parameters
+    }
+    
+    const query = useInfiniteQuery(name, async ({ pageParam = 1 }) => {
+        const response = await fetch(`${url}?format=json${parseQueryParams(queryParams)}&page=${pageParam}`);
         const data = await response.json();
         
         function getNextPage() {
@@ -33,7 +35,8 @@ export default function useSRInfiniteQuery(name, url, ...queryParams) {
                 return;
             }
 
-			const scrollPosition = window.innerHeight + window.scrollY,
+			const
+                scrollPosition = window.innerHeight + window.scrollY,
 				bottomPosition = document.body.offsetHeight;
             
 			if (scrollPosition >= bottomPosition * 0.8) {
