@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { mdiPotSteamOutline } from '@mdi/js';
+import { mdiRadio } from '@mdi/js';
 import Icon from '@mdi/react';
-import { Col, Row } from './styled-components';
+import { Col, Row, H3 } from './styled-components';
 
 export default function Loader({ loading, message = null }) {
     if (loading === false) {
@@ -9,9 +9,9 @@ export default function Loader({ loading, message = null }) {
     }
 
     return (
-        <Wrapper as={Col} justify="center" align="center">
+        <Wrapper justify="center" align="center">
             <IconOutlined />
-            <Dots as={Row} align="center">
+            <Dots>
                 <Dot />
                 <Dot />
                 <Dot />
@@ -21,17 +21,17 @@ export default function Loader({ loading, message = null }) {
     );
 }
 
-const Wrapper = styled.div`
-    color: rgb(${({ theme }) => theme.color.primary});
+const Wrapper = styled(Col)`
+    color: rgb(${({ theme }) => theme.color.textPrimary});
     padding: 5px;
 `;
 
-const IconOutlined = styled(Icon).attrs({ path: mdiPotSteamOutline })`
+const IconOutlined = styled(Icon).attrs({ path: mdiRadio })`
     width: 5rem;
     height: 5rem;
 `;
 
-const Message = styled.h3`
+const Message = styled(H3)`
     font-weight: normal;
 `;
 
@@ -46,13 +46,13 @@ const Dot = styled.span`
     @keyframes jump {
         50% {
             transform: scale(0.95) translateY(-2px);
-            background-color: rgb(${({ theme }) => theme.color.bodyLight});
+            background-color: rgb(0, 0, 0);
         }
     }
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background-color: white;
+    background-color: rgb(125, 125, 125);
     animation: jump 1s infinite ease-in-out;
     &:nth-child(2) {
         animation-delay: 0.25s;

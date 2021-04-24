@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { H2, Button, Row } from './styled-components';
+import { H6, Button, Row } from './styled-components';
 import { mdiPlay, mdiPause, mdiLoading } from '@mdi/js';
 import Icon from '@mdi/react';
 
@@ -11,6 +11,7 @@ export default function ChannelThumb({ channel = {}, playing = false, play, paus
 
     useEffect(() => {
         return () => {
+            pauseAudio();
             audio.current = null;
         }
     }, []);
@@ -18,6 +19,8 @@ export default function ChannelThumb({ channel = {}, playing = false, play, paus
     useEffect(() => {
         if (!playing) {
             pauseAudio();
+        } else {
+            playAudio();
         }
     }, [playing]);
 
@@ -25,20 +28,25 @@ export default function ChannelThumb({ channel = {}, playing = false, play, paus
         audio.current?.pause();
     }
 
+    async function playAudio() {
+        try {
+            setLoading(true);
+            await audio.current.play();
+            audio.current.volume = 0.35;
+            play(channel.id);
+        } catch (e) {
+            console.error(`Error when loading audio channel: ${e}`);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     async function togglePlaying() {
         if (playing) {
             pauseAudio();
             pause();
         } else {
-            try {
-                setLoading(true);
-                await audio.current.play();
-                play(channel.id);
-            } catch (e) {
-                console.error(`Error when loading channel: ${e}`);
-            } finally {
-                setLoading(false);
-            }
+            playAudio();
         }
     }
 
@@ -73,11 +81,9 @@ const Wrapper = styled.div`
     `}
 `;
 
-const Header = styled(H2)`
+const Header = styled(H6)`
     font-weight: normal;
-    font-size: 1.75rem;
     text-decoration: none;
-    margin-left: 15px;
     &:hover {
         text-decoration: underline;
     }
@@ -88,20 +94,24 @@ const HeaderWrapper = styled(Row).attrs({ align: "center" })`
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
     border-bottom: 4px solid #${({ color }) => color};
     height: 100%;
+    padding: 15px;
     flex: 1;
 `;
 
 const ChannelIcon = styled.img.attrs({ loading: "lazy" })`
     max-width: 100%;
-    width: 75px;
+    width: 60px;
     margin-left: 5px;
 `;
 
 const PlayToggler = styled(Button)`
-    width: 75px;
-    height: 75px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
 `;
 
 const PlayTogglerIcon = styled(Icon)`
-    
+
 `;

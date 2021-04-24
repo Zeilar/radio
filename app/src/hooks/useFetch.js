@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 export default function useFetch(url, args) {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
-    const [status, setStatus] = useState(200);
     const [error, setError] = useState(false);
 
     useEffect(() => {
@@ -13,7 +12,6 @@ export default function useFetch(url, args) {
                     throw "Invalid URL parameter";
                 }
                 const response = await fetch(url, args);
-                setStatus(response.status);
                 const data = await response.json();
                 setData(data);
             } catch (e) {
@@ -24,5 +22,5 @@ export default function useFetch(url, args) {
         })();
     }, [url, args]);
 
-    return { loading, data, status, error };
+    return { loading, data, error, success: !error };
 }

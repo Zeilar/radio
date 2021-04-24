@@ -1,20 +1,22 @@
-import { useEffect, useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { UserContext } from '../contexts/UserContext';
 import ChannelThumb from '../ChannelThumb';
-import { Row, H1, Col } from '../styled-components';
+import { Button, Col, Container } from '../styled-components';
 import Loader from '../Loader';
-import { mdiRadio } from '@mdi/js';
-import Icon from '@mdi/react';
 import { useInfiniteQuery } from 'react-query';
 
 export default function Home() {
     const [activeChannel, setActiveChannel] = useState();
 
-    const { user } = useContext(UserContext);
-
-    const { data, isSuccess, isFetchingNextPage, loading, hasNextPage, fetchNextPage } = useInfiniteQuery("channels", async ({ pageParam = 1 }) => {
-        const response = await fetch(`http://api.sr.se/api/v2/channels?format=json&size=20&page=${pageParam}`);
+    const {
+        data: channels,
+        isSuccess,
+        isFetchingNextPage,
+        isLoading,
+        hasNextPage,
+        fetchNextPage
+    } = useInfiniteQuery("channels", async ({ pageParam = 1 }) => {
+        const response = await fetch(`http://api.sr.se/api/v2/channels?format=json&size=30&page=${pageParam}`);
         const { channels, pagination } = await response.json();
         
         function calculateNextPage() {
@@ -25,7 +27,7 @@ export default function Home() {
         }
 
         return { data: channels, nextPage: calculateNextPage() };
-    }, { getNextPageParam: lastQuery => lastQuery.nextPage });
+    }, { getNextPageParam: query => query.nextPage });
 
     function playChannel(id) {
         if (!id) return;
@@ -38,8 +40,6 @@ export default function Home() {
 
     useEffect(() => {
         function attemptToLoadMore() {
-            // setScrollToTopVisible(window.scrollY >= 1500 ? true : false);
-
             if (!hasNextPage || isFetchingNextPage) {
                 return;
             }
@@ -59,9 +59,9 @@ export default function Home() {
 
     return (
         <Wrapper>
-            {/* {loading && <Loader message="Preparing your meals" />} */}
+            {isLoading && <Loader />}
             <Channels>
-                {isSuccess && data.pages.map(page => (
+                {isSuccess && channels.pages.map(page => (
                     page.data.map(channel => (
                         <ChannelThumb
                             playing={channel.id === activeChannel}
@@ -73,6 +73,7 @@ export default function Home() {
                     ))
                 ))}
             </Channels>
+            {hasNextPage && <Button onClick={() => fetchNextPage()}>Load more</Button>}
         </Wrapper>
     );
 }
@@ -81,9 +82,9 @@ const Wrapper = styled(Col)`
 
 `;
 
-const Channels = styled.div`
+const Channels = styled(Container)`
     margin: 30px auto;
     display: grid;
-    grid-gap: 15px;
-    width: 500px;
+    grid-gap: 30px;
+    grid-template-columns: repeat(2, 1fr);
 `;

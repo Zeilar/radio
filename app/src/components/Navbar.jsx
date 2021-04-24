@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { Row, flexbox } from './styled-components';
+import { Row, flexbox, Container } from './styled-components';
 import { mdiRadio } from '@mdi/js';
 import Icon from '@mdi/react';
 
 export default function Navbar() {
     return (
-        <Header>
-            <Nav>
+        <Header as="header">
+            <Nav as="nav">
                 <Row as={Navlist}>
                     <Brand>
                         <Brandlink>
@@ -24,18 +23,20 @@ export default function Navbar() {
     );
 }
 
-const Header = styled.header`
+const Header = styled(Row).attrs({ justify: "center" })`
     background-color: rgb(${({ theme }) => theme.color.bodyLight});
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 `;
 
-const Nav = styled.nav`
+const Nav = styled(Container)`
     
 `;
 
 const Navlist = styled.ul.attrs({ align: "center" })`
-    max-width: 800px;
-    margin: auto;
+    flex: 1;
 `;
 
 const Navitem = styled.li`
@@ -51,7 +52,7 @@ const Navlink = styled(NavLink).attrs({ exact: true })`
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
     text-decoration: none;
-    padding: 12px 0;
+    padding: 16px 0;
     ${({ theme }) => css`
         color: rgb(${theme.color.textPrimary});
         &.active {

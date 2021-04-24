@@ -7,16 +7,41 @@ export const flexbox = css(({ justify, align, block }) => css`
     width: ${block ? "100%" : null};
 `);
 
+export const Row = styled.div`
+    ${flexbox}
+    flex-direction: row;
+`;
+
+export const Col = styled.div`
+    ${flexbox}
+    flex-direction: column;
+`;
+
 export const header = css(({ theme }) => css`
     color: rgb(${theme.color.textPrimary});
     font-weight: bold;
 `);
+
+export const Container = styled.div`
+    ${flexbox}
+    padding: 0 15px;
+    max-width: calc(100% - 30px);
+    width: 1000px;
+    ${({ row, col }) => css`
+        flex-direction: ${col && "column"};
+        flex-direction: ${row && "row"};
+    `}
+`;
 
 export const Button = styled.button(({ theme }) => css`
     cursor: pointer;
     color: rgb(${theme.color.textSecondary});
     background-color: rgb(${theme.color.brand});
     border: 0;
+    padding: 12px 40px;
+    font-size: 1.15rem;
+    font-weight: bold;
+    font-family: Poppins;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
     &[disabled] {
         cursor: default;
@@ -41,7 +66,7 @@ export const H3 = styled.h3`
 
 export const H4 = styled.h4`
     ${header}
-    font-size: 1.5;
+    font-size: 1.5rem;
 `;
 
 export const H5 = styled.h5`
@@ -52,16 +77,6 @@ export const H5 = styled.h5`
 export const H6 = styled.h6`
     ${header}
     font-size: 1rem;
-`;
-
-export const Row = styled.div`
-    ${flexbox}
-    flex-direction: row;
-`;
-
-export const Col = styled.div`
-    ${flexbox}
-    flex-direction: column;
 `;
 
 export const gridItem = css`
