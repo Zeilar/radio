@@ -73,17 +73,18 @@ export default function Home() {
                     ))
                 ))}
             </Channels>
-            {hasNextPage && <Button onClick={() => fetchNextPage()}>Load more</Button>}
+            {isFetchingNextPage && <Loader />}
+            {!isLoading && !isFetchingNextPage && hasNextPage && <Button onClick={() => fetchNextPage()}>Load more</Button>}
         </Wrapper>
     );
 }
 
-const Wrapper = styled(Col)`
-
+const Wrapper = styled(Col).attrs({ align: "center" })`
+    padding: 30px;
 `;
 
 const Channels = styled(Container)`
-    margin: 30px auto;
+    margin: 0 auto 30px auto;
     display: grid;
     grid-gap: 30px;
     grid-template-columns: repeat(2, 1fr);

@@ -35,6 +35,7 @@ const ButtonWrapper = styled(Button)`
     right: 15px;
     bottom: 50px;
     padding: 5px;
+    z-index: 100;
     transition: opacity 0.1s ease-in, transform 0.25s ease-in;
     ${({ visible }) => !visible && css`
         opacity: 0;
