@@ -24,11 +24,14 @@ export default function Navbar() {
 }
 
 const Header = styled(Row).attrs({ justify: "center" })`
-    background-color: rgb(${({ theme }) => theme.color.bodyLight});
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
     position: sticky;
-    top: 0;
     z-index: 100;
+    top: 0;
+    ${({ theme }) => css`
+        background-color: rgb(${theme.color.bodyLight});
+        height: ${theme.navbarHeight}px;
+    `}
 `;
 
 const Nav = styled(Container)`
@@ -54,6 +57,7 @@ const Navlink = styled(NavLink).attrs({ exact: true })`
     border-bottom: 2px solid transparent;
     text-decoration: none;
     padding: 16px 0;
+    user-select: none;
     ${({ theme }) => css`
         color: rgb(${theme.color.textPrimary});
         &.active {
@@ -70,6 +74,7 @@ const Brandlink = styled(NavLink).attrs({ align: "center", to: "/", exact: true 
     font-weight: bold;
     font-size: 1.25rem;
     text-decoration: none;
+    user-select: none;
     ${({ theme }) => css`
         color: rgb(${theme.color.textPrimary});
         &.active {

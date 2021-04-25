@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import useFetch from '../../hooks/useFetch';
 import { Loader } from '../layout';
-import { Container } from '../styled-components';
+import { Container, H3, Row, Col, H6, fadeIn } from '../styled-components';
 import useSRInfiniteQuery from '../../hooks/useSRInfiniteQuery';
+import { NavLink } from 'react-router-dom';
 
 export default function Channel({ match }) {
     const id = match.params.id;
+
+    const [headerShadow, setHeaderShadow] = useState(false);
 
     const programsQuery = useSRInfiniteQuery(
         `channel/${id}/programs`,
@@ -15,27 +18,64 @@ export default function Channel({ match }) {
     );
     const channelQuery = useFetch(`http://api.sr.se/api/v2/channels/${id}?format=json`);
 
-    console.log(channelQuery, programsQuery);
+    useEffect(() => {
+        console.log(channelQuery, programsQuery);
+
+        function scrollHandler() {
+            setHeaderShadow(window.scrollY >= 30);
+        }
+        document.addEventListener("scroll", scrollHandler);
+        return () => {
+            document.removeEventListener("scroll", scrollHandler);
+            // destroy audio instance
+        }
+    }, []);
+
 
     function downloading() {
-        return programsQuery.loading || channelQuery.loading;
+        return programsQuery.isLoading || channelQuery.loading;
+    }
+
+    function urlFormat(string = "") {
+        return string.replace(" ", "-");
     }
 
     function renderDynamic() {
         if (downloading()) {
             return <Loader />;
         }
-        if (programsQuery.success) {
-            return (
-                <ProgramsWrapper>
-                    {programsQuery.data.programs.map(program => (
-                        <Program>
-                            {program.description}
-                        </Program>
-                    ))}
-                </ProgramsWrapper>
-            );
-        }
+        const channel = channelQuery.data.channel;
+        return (
+            channelQuery.success && programsQuery.isSuccess && (
+                <>
+                    <ChannelWrapper shadow={headerShadow}>
+                        <ChannelIcon src={channel.image} />
+                        <ChannelContent color={channel.color}>
+                            <ChannelMeta>
+                                <ChannelName>
+                                    {channel.name}
+                                </ChannelName>
+                                <ChannelType>{channel.channeltype}</ChannelType>
+                            </ChannelMeta>
+                        </ChannelContent>
+                    </ChannelWrapper>
+                    <Programs>
+                        {programsQuery.data.pages.map(page => (
+                            page.data.programs.map(program => (
+                                <Program color={channelQuery.data.channel.color} key={program.id} as="article">
+                                    <ProgramMeta>
+                                        <ProgramName as={NavLink} to={`/program/${program.id}/${urlFormat(program.name)}`}>
+                                            {program.name}
+                                        </ProgramName>
+                                        <ProgramDescription>{program.description}</ProgramDescription>
+                                    </ProgramMeta>
+                                </Program>
+                            ))
+                        ))}
+                    </Programs>
+                </>
+            )
+        );
     }
 
     return (
@@ -45,14 +85,68 @@ export default function Channel({ match }) {
     );
 }
 
-const Wrapper = styled(Container).attrs({ justify: "center" })`
+const Wrapper = styled(Container).attrs({ justify: "center", col: true })`
+    ${fadeIn}
+`;
+
+const ChannelWrapper = styled(Row).attrs({ align: "center" })`
+    position: sticky;
+    ${({ theme, shadow }) => css`
+        background-color: rgb(${theme.color.body});
+        top: ${theme.navbarHeight}px;
+        box-shadow: ${shadow && "0 0 10px 0 rgba(0, 0, 0, 0.5)"};
+    `}
+`;
+
+const ChannelContent = styled(Row).attrs({ align: "center" })`
+    border-top: 2px solid transparent;
+    border-bottom: 4px solid #${({ color }) => color};
+    height: 100px;
+    flex: 1;
+`;
+
+const ChannelMeta = styled(Col)`
+    margin-left: 10px;
+`;
+
+const ChannelIcon = styled.img`
+    width: 100px;
+`;
+
+const ChannelName = styled(H3)`
     
 `;
 
-const ProgramsWrapper = styled.div`
-    background-color: rgb(${({ theme }) => theme.color.bodyDark});
+const ChannelType = styled(H6)`
+    font-weight: normal;
+    margin-top: 5px;
 `;
 
-const Program = styled.article`
+const Programs = styled.div`
+    display: grid;
+    grid-gap: 15px;
+    margin-top: 15px;
+`;
+
+const Program = styled(Row)`
+    border-left: 4px solid #${({ color }) => color};
+    background-color: rgb(${({ theme }) => theme.color.bodyLight});
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+    padding: 15px;
+`;
+
+const ProgramMeta = styled(Col).attrs({ align: "flex-start" })`
     
+`;
+
+const ProgramDescription = styled.p`
+    margin-top: 5px;
+`;
+
+const ProgramName = styled(H6).attrs({ exact: true })`
+    color: rgb(${({ theme }) => theme.color.textPrimary});
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
 `;

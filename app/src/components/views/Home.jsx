@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import ChannelThumb from '../ChannelThumb';
-import { Button, Col, Container } from '../styled-components';
+import { Button, Col, Container, fadeIn } from '../styled-components';
 import { Loader } from '../layout';
 import useSRInfiniteQuery from '../../hooks/useSRInfiniteQuery';
 
@@ -51,7 +51,7 @@ export default function Home() {
 }
 
 const Wrapper = styled(Col).attrs({ align: "center" })`
-    
+    ${fadeIn}
 `;
 
 const Channels = styled(Container)`

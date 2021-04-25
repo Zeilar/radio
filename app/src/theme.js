@@ -13,4 +13,5 @@ export const theme = {
         link: "0, 127, 255",
     },
     borderRadius: 3,
+    navbarHeight: 60,
 };

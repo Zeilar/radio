@@ -24,7 +24,7 @@ app.use(session({
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 
-// Serve the app if nothing else to do
+// Serve the frontend if nothing else to do
 app.use(express.static(path.join(__dirname, 'build-ui')));
 
 app.listen(PORT);

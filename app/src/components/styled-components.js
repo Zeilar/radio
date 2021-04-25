@@ -34,6 +34,18 @@ export const Container = styled.div`
     `}
 `;
 
+export const fadeIn = css`
+    @keyframes fade {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    animation: fade 0.35s forwards;
+`;
+
 export const Button = styled.button(({ theme }) => css`
     cursor: pointer;
     color: rgb(${theme.color.textSecondary});
