@@ -11,8 +11,13 @@ export const GlobalStyles = createGlobalStyle`
         list-style: none;
     }
 
+    img {
+        user-select: none;
+    }
+
     ::selection {
-        color: rgb(0, 127, 200);
+        background-color: rgb(15, 15, 15);
+        color: rgb(235, 235, 235);
     }
 
     body {
