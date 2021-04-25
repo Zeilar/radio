@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import useFetch from '../../hooks/useFetch';
 import { Loader } from '../layout';
-import { Container, H3, Row, Col, H6, fadeIn } from '../styled-components';
+import { Container, H3, Row, Col, H5, fadeIn } from '../styled-components';
 import useSRInfiniteQuery from '../../hooks/useSRInfiniteQuery';
 import { NavLink } from 'react-router-dom';
 
@@ -64,9 +64,12 @@ export default function Channel({ match }) {
                             page.data.programs.map(program => (
                                 <Program color={channelQuery.data.channel.color} key={program.id} as="article">
                                     <ProgramMeta>
-                                        <ProgramName as={NavLink} to={`/program/${program.id}/${urlFormat(program.name)}`}>
-                                            {program.name}
-                                        </ProgramName>
+                                        <div>
+                                            <ProgramName as={NavLink} to={`/program/${program.id}/${urlFormat(program.name)}`}>
+                                                {program.name}
+                                            </ProgramName>
+                                            <ProgramInfo>{program.broadcastinfo}</ProgramInfo>
+                                        </div>
                                         <ProgramDescription>{program.description}</ProgramDescription>
                                     </ProgramMeta>
                                 </Program>
@@ -117,7 +120,7 @@ const ChannelName = styled(H3)`
     
 `;
 
-const ChannelType = styled(H6)`
+const ChannelType = styled(H5)`
     font-weight: normal;
     margin-top: 5px;
 `;
@@ -140,13 +143,20 @@ const ProgramMeta = styled(Col).attrs({ align: "flex-start" })`
 `;
 
 const ProgramDescription = styled.p`
-    margin-top: 5px;
+    margin-top: 10px;
 `;
 
-const ProgramName = styled(H6).attrs({ exact: true })`
+const ProgramName = styled(H5).attrs({ exact: true })`
     color: rgb(${({ theme }) => theme.color.textPrimary});
     text-decoration: none;
     &:hover {
         text-decoration: underline;
     }
+`;
+
+const ProgramInfo = styled.p`
+    margin-left: 8px;
+    display: inline;
+    font-family: Poppins;
+    font-style: italic;
 `;
