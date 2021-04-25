@@ -8,13 +8,12 @@ export default function useFetch(url, args) {
     useEffect(() => {
         (async () => {
             try {
-                if (!url) {
-                    throw "Invalid URL parameter";
-                }
+                if (!url) throw new Error(`Expected URL parameter, got \`${url}\``);
                 const response = await fetch(url, args);
                 const data = await response.json();
                 setData(data);
             } catch (e) {
+                console.error(e);
                 setError(e);
             } finally {
                 setLoading(false);
