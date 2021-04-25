@@ -1,16 +1,19 @@
 import { useEffect } from 'react';
 import { useInfiniteQuery } from 'react-query';
 
-export default function useSRInfiniteQuery(name = "", url = "", ...queryParams) {
-    function parseQueryParams(params = []) {
-        if (params.length <= 0) {
+export default function useSRInfiniteQuery(name = "", url = "", queryParams = {}) {
+    function parseQueryParams(params = {}) {
+        if (Object.keys(params).length <= 0) {
             return "";
         }
 
         // Parse { key: value } to `key=value` strings
-        params = params.map(param => Object.entries(param).map(([key, val]) => `${key}=${val}`).join("&"));
+        params = Object
+            .entries(params)
+            .map(([key, val]) => `${key}=${val}`)
+            .join("&");
 
-        return `&${params.join("&")}`; // Parse to URI query parameters
+        return `&${params}`; // Parse to URI query parameters
     }
     
     const query = useInfiniteQuery(name, async ({ pageParam = 1 }) => {

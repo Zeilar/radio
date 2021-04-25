@@ -16,7 +16,7 @@ export default function Channel({ match }) {
         `http://api.sr.se/api/v2/programs/index`,
         { channelid: id, size: 30 },
     );
-    const channelQuery = useFetch(`http://api.sr.se/api/v2/channels/${id}?format=json`);
+    const channelQuery = useFetch(`http://api.sr.se/api/v2/channels/${id}`, null, { format: "json" });
 
     useEffect(() => {
         console.log(channelQuery, programsQuery);
