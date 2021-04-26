@@ -13,9 +13,18 @@ import {
 import Icon from '@mdi/react';
 
 export default function Player() {
-    const { play, pause, loading, playing, title, description, volume, toggleMute, setVolume, muted } = useContext(PlayerContext);
-
-    console.log('playing', playing);
+    const {
+        play,
+        pause,
+        loading,
+        playing,
+        title,
+        description,
+        volume,
+        toggleMute,
+        setVolume,
+        muted
+    } = useContext(PlayerContext);
 
     function renderPlayButton() {
         if (loading) {
@@ -107,4 +116,5 @@ const PlayerIcon = styled(Icon)`
     outline: 0;
     width: 2.5rem;
     height: 2.5rem;
+    user-select: none;
 `;
