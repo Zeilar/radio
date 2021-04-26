@@ -41,15 +41,17 @@ const ChannelWrapper = styled(Row).attrs({ align: "center" })`
     position: sticky;
     transition: 0.05s;
     ${({ theme, shadow }) => css`
-        background-color: rgb(${shadow ? theme.color.bodyLight : theme.color.body});
+        background-color: rgb(${theme.color.body});
         top: ${theme.navbarHeight}px;
-        box-shadow: ${shadow && "0 0 10px 0 rgba(0, 0, 0, 0.15)"};
+        ${shadow && css`
+            background-color: rgb(${theme.color.bodyLight});
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+            border-bottom: 4px solid rgb(${theme.color.brand});
+        `}
     `}
 `;
 
 const ChannelContent = styled(Row).attrs({ align: "center" })`
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid #${({ color }) => color};
     height: 100px;
     flex: 1;
 `;
@@ -86,7 +88,7 @@ const ChannelLink = styled(H4)`
     text-align: right;
     font-family: Poppins;
     ${({ color }) => css`
-        &:not(.active) {
+        &.active {
             color: #${color};
         }
     `}
