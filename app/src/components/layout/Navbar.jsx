@@ -46,6 +46,7 @@ const Navlist = styled.ul.attrs({ align: "center" })`
 
 const Navitem = styled.li`
     display: flex;
+    align-items: center;
 `;
 
 const Brand = styled(Navitem)`
