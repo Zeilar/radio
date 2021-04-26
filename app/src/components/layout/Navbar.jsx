@@ -61,6 +61,7 @@ const Navlink = styled(NavLink).attrs({ exact: true })`
     padding: 16px 0;
     user-select: none;
     font-weight: bold;
+    height: 100%;
     ${({ theme }) => css`
         color: rgb(${theme.color.textPrimary});
         &.active {
