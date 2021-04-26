@@ -42,7 +42,7 @@ const Program = styled(Col)`
 `;
 
 const ProgramCard = styled(Col).attrs({ align: "flex-start" })`
-    padding: 15px;
+    padding: 20px;
 `;
 
 const ProgramDescription = styled.p`

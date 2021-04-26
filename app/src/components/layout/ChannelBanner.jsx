@@ -26,10 +26,10 @@ export default function ChannelBanner({ channel = {}, channelUrl }) {
                 </ChannelMeta>
                 <ChannelLinks>
                     <ChannelLink as={NavLink} to={channelUrl} color={channel.color} exact>
-                        Programs
+                        Program
                     </ChannelLink>
                     <ChannelLink as={NavLink} to={`${channelUrl}/schedule`} color={channel.color} exact>
-                        Schedule
+                        Tablå
                     </ChannelLink>
                 </ChannelLinks>
             </ChannelContent>
@@ -76,13 +76,15 @@ const ChannelLinks = styled.div`
     grid-gap: 15px;
     align-self: flex-end;
     margin-left: auto;
-    grid-template-columns: 1fr 1fr;
-    margin-bottom: 15px;
+    grid-template-columns: auto auto;
+    margin-bottom: 10px;
     margin-right: 10px;
 `;
 
 const ChannelLink = styled(H4)`
     text-decoration: none;
+    text-align: right;
+    font-family: Poppins;
     ${({ color }) => css`
         &.active {
             color: #${color};
