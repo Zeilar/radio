@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { splitIntoTwoColumns } from '../../../helpers';
 import { Col, H5 } from '../../styled-components';
 import { formatForUrl } from './Channel';
 
@@ -7,17 +8,21 @@ export default function ChannelPrograms({ channel, programs }) {
     return (
         <Programs>
             {programs.map(page => (
-                page.data.programs.map(program => (
-                    <Program color={channel.color} key={program.id} as="article">
-                        <ProgramImage src={program.programimagetemplatewide} />
-                        <ProgramCard>
-                            <ProgramName as={NavLink} to={`/program/${program.id}/${formatForUrl(program.name)}`}>
-                                {program.name}
-                            </ProgramName>
-                            <ProgramInfo>{program.broadcastinfo}</ProgramInfo>
-                            <ProgramDescription>{program.description}</ProgramDescription>
-                        </ProgramCard>
-                    </Program>
+                splitIntoTwoColumns(page.data.programs).map((column, i) => (
+                    <ProgramColumn key={i}>
+                        {column.map(program => (
+                            <Program color={channel.color} key={program.id} as="article">
+                                <ProgramImage src={program.programimagetemplatewide} />
+                                <ProgramCard>
+                                    <ProgramName as={NavLink} to={`/program/${program.id}/${formatForUrl(program.name)}`}>
+                                        {program.name}
+                                    </ProgramName>
+                                    <ProgramInfo>{program.broadcastinfo}</ProgramInfo>
+                                    <ProgramDescription>{program.description}</ProgramDescription>
+                                </ProgramCard>
+                            </Program>
+                        ))}
+                    </ProgramColumn>
                 ))
             ))}
         </Programs>
@@ -66,4 +71,9 @@ const ProgramInfo = styled.p`
 
 const ProgramImage = styled.img`
     object-fit: cover;
+`;
+
+const ProgramColumn = styled.div`
+    display: grid;
+    grid-gap: 15px;
 `;

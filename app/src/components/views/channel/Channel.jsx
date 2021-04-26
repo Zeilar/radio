@@ -34,7 +34,7 @@ export default function Channel({ match }) {
         }
     }, []);
 
-    console.log(programsQuery);
+    // console.log(programsQuery);
 
     function downloading() {
         return programsQuery.isLoading || channelQuery.loading;
