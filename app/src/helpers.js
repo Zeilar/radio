@@ -1,4 +1,4 @@
-export function splitIntoColumns(array = [], n = 3) {
+export function chunk(array = [], n = 3) {
     const columnSize = Math.floor(array.length / n);
     const columns = [];
 

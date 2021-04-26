@@ -1,15 +1,15 @@
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { splitIntoColumns } from '../../../helpers';
+import { chunk } from '../../../helpers';
 import { Col, H5 } from '../../styled-components';
 import { formatForUrl } from './Channel';
 
-const columnsAmount = 3;
+const columns = 3;
 export default function ChannelPrograms({ channel, programs }) {
     return (
         <Programs>
             {programs.map(page => (
-                splitIntoColumns(page.data.programs, columnsAmount).map((column, i) => (
+                chunk(page.data.programs, columns).map((column, i) => (
                     <ProgramColumn key={i}>
                         {column.map(program => (
                             <Program color={channel.color} key={program.id} as="article">
@@ -32,7 +32,7 @@ export default function ChannelPrograms({ channel, programs }) {
 
 const Programs = styled.div`
     display: grid;
-    grid-template-columns: repeat(${columnsAmount}, 1fr);
+    grid-template-columns: repeat(${columns}, 1fr);
     grid-gap: 15px;
     margin-top: 15px;
 `;
