@@ -37,6 +37,7 @@ const Header = styled(Row).attrs({ justify: "center" })`
 const Nav = styled(Container)`
     padding-top: 0;
     padding-bottom: 0;
+    height: 100%;
 `;
 
 const Navlist = styled.ul.attrs({ align: "center" })`
@@ -58,6 +59,7 @@ const Navlink = styled(NavLink).attrs({ exact: true })`
     text-decoration: none;
     padding: 16px 0;
     user-select: none;
+    font-weight: bold;
     ${({ theme }) => css`
         color: rgb(${theme.color.textPrimary});
         &.active {

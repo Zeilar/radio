@@ -8,7 +8,7 @@ export const theme = {
         brand: "15, 15, 15",
         textPrimary: "15, 15, 15",
         textSecondary: "235, 235, 235",
-        textMuted: "150, 150, 150",
+        textMuted: "200, 200, 200",
         borderPrimary: "225, 225, 225",
         link: "0, 127, 255",
     },

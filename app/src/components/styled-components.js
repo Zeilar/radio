@@ -42,7 +42,7 @@ export const fadeIn = css`
             opacity: 1;
         }
     }
-    animation: fade 0.35s forwards;
+    animation: fade 0.25s forwards;
 `;
 
 export const Button = styled.button(({ theme }) => css`

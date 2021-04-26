@@ -47,6 +47,7 @@ const ProgramCard = styled(Col).attrs({ align: "flex-start" })`
 
 const ProgramDescription = styled.p`
     margin-top: 15px;
+    font-family: Roboto;
 `;
 
 const ProgramName = styled(H5).attrs({ exact: true })`
@@ -59,8 +60,8 @@ const ProgramName = styled(H5).attrs({ exact: true })`
 
 const ProgramInfo = styled.p`
     display: inline;
-    font-family: Poppins;
-    font-style: italic;
+    font: italic 0.9rem Poppins;
+    margin-top: 5px;
 `;
 
 const ProgramImage = styled.img`

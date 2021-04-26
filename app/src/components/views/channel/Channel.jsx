@@ -44,6 +44,9 @@ export default function Channel({ match }) {
         if (downloading()) {
             return <Loader />;
         }
+        if (channelQuery.error || programsQuery.isError) {
+            return null;
+        }
         const channel = channelQuery.data.channel;
         return (
             channelQuery.success && programsQuery.isSuccess && (

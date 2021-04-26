@@ -25,11 +25,11 @@ export default function ChannelBanner({ channel = {}, channelUrl }) {
                     <ChannelType>{channel.channeltype}</ChannelType>
                 </ChannelMeta>
                 <ChannelLinks>
-                    <ChannelLink as={NavLink} to={channelUrl} color={channel.color} exact>
-                        Program
-                    </ChannelLink>
                     <ChannelLink as={NavLink} to={`${channelUrl}/tabla`} color={channel.color} exact>
                         Tablå
+                    </ChannelLink>
+                    <ChannelLink as={NavLink} to={channelUrl} color={channel.color} exact>
+                        Program
                     </ChannelLink>
                 </ChannelLinks>
             </ChannelContent>
@@ -48,8 +48,8 @@ const ChannelWrapper = styled(Row).attrs({ align: "center" })`
 `;
 
 const ChannelContent = styled(Row).attrs({ align: "center" })`
-    border-top: 2px solid transparent;
-    border-bottom: 4px solid #${({ color }) => color};
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid #${({ color }) => color};
     height: 100px;
     flex: 1;
 `;
@@ -71,7 +71,7 @@ const ChannelType = styled(H5)`
     margin-top: 5px;
 `;
 
-const ChannelLinks = styled.div`
+const ChannelLinks = styled.nav`
     display: grid;
     grid-gap: 15px;
     align-self: flex-end;
@@ -86,7 +86,7 @@ const ChannelLink = styled(H4)`
     text-align: right;
     font-family: Poppins;
     ${({ color }) => css`
-        &.active {
+        &:not(.active) {
             color: #${color};
         }
     `}
