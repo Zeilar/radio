@@ -1,10 +1,10 @@
-export function splitIntoColumns(array = [], columns = 3) {
-    const columnSize = Math.floor(array.length / columns);
-    const _columns = [];
+export function splitIntoColumns(array = [], n = 3) {
+    const columnSize = Math.floor(array.length / n);
+    const columns = [];
 
-    Array(columns).fill().forEach((column, i) => {
-        _columns.push(array.slice(columnSize * i, columnSize * (i + 1)));
+    Array(n).fill().forEach((column, i) => {
+        columns.push(array.slice(columnSize * i, columnSize * (i + 1)));
     });
 
-    return _columns;
+    return columns;
 }
