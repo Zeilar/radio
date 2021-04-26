@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { H6, Button, Row } from './styled-components';
+import { H5, Button, Row } from './styled-components';
 import { mdiPlay, mdiPause, mdiLoading } from '@mdi/js';
 import Icon from '@mdi/react';
 
@@ -81,7 +81,7 @@ const Wrapper = styled.div`
     `}
 `;
 
-const Header = styled(H6)`
+const Header = styled(H5)`
     font-weight: normal;
     text-decoration: none;
     &:hover {
