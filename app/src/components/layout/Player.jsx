@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { PlayerContext } from '../contexts/PlayerContext';
 import { Col, Row, H6 } from '../styled-components';
@@ -67,8 +67,8 @@ const Wrapper = styled(Row).attrs({ justify: "center", align: "center" })`
     `}
 `;
 
-const VolumeWrapper = styled(Row)`
-    width: 10rem;  
+const VolumeWrapper = styled(Row).attrs({ justify: "flex-end" })`
+    width: 20rem;  
 `;
 
 const VolumeSlider = styled.input.attrs({ type: "range", min: 0, max: 100 })`
@@ -87,7 +87,7 @@ const Controls = styled(Row).attrs({ justify: "center" })`
 `;
 
 const Meta = styled(Col)`
-    width: 10rem;
+    width: 20rem;
     white-space: nowrap;
 `;
 

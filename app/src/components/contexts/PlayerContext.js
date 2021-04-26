@@ -1,8 +1,15 @@
 import { createContext, useEffect, useRef, useState } from 'react';
+import useFetch from '../../hooks/useFetch';
 
 export const PlayerContext = createContext();
 
 export function PlayerContextProvider({ children }) {
+    const { data } = useFetch("http://api.sr.se/api/v2/channels/132", {
+        params: {
+            format: "json",
+        },
+    });
+
     const [playing, setPlaying] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -18,6 +25,14 @@ export function PlayerContextProvider({ children }) {
             player.current = null;
         }
     }, []);
+
+    useEffect(() => {
+        if (data?.channel) {
+            const channel = data.channel;
+            setTitle(channel.name);
+            setDescription(channel.tagline);
+        }
+    }, [data]);
 
     useEffect(() => {
         if (!volume || !player.current) return;
@@ -45,8 +60,6 @@ export function PlayerContextProvider({ children }) {
             player.current.pause();
         }
     }, [playing, player.current.src]);
-
-    console.log(player.current, 'paused', player.current.paused);
 
     function calculateVolume(number) {
         return number / 100;
