@@ -1,8 +1,8 @@
 import { createContext, useState } from 'react';
 
-export const ScrollToTop = createContext();
+export const ScrollToTopContext = createContext();
 
-export function ScrollToTopProvider({ children }) {
+export function ScrollToTopContextProvider({ children }) {
     const [visible, setVisible] = useState(false);
 
     function show() {
@@ -14,8 +14,8 @@ export function ScrollToTopProvider({ children }) {
     }
 
     return (
-        <ScrollToTop.Provider value={{ visible, show, hide }}>
+        <ScrollToTopContext.Provider value={{ visible, show, hide }}>
             {children}
-        </ScrollToTop.Provider>
+        </ScrollToTopContext.Provider>
     );
 }

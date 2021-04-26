@@ -1,66 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { H5, Button, Row } from './styled-components';
-import { mdiPlay, mdiPause, mdiLoading } from '@mdi/js';
+import { mdiPlay } from '@mdi/js';
 import Icon from '@mdi/react';
+import { useContext } from 'react';
+import { PlayerContext } from './contexts/PlayerContext';
 
-export default function ChannelThumb({ channel = {}, playing = false, play, pause }) {
-    const [loading, setLoading] = useState(false);
-    const audio = useRef(new Audio(channel.liveaudio.url));
-
-    useEffect(() => {
-        return () => {
-            pauseAudio();
-            audio.current = null;
-        }
-    }, []);
-
-    useEffect(() => {
-        if (!playing) {
-            pauseAudio();
-        } else {
-            playAudio();
-        }
-    }, [playing]);
-
-    function pauseAudio() {
-        audio.current?.pause();
-    }
-
-    async function playAudio() {
-        try {
-            setLoading(true);
-            await audio.current.play();
-            audio.current.volume = 0.35;
-            play(channel.id);
-        } catch (e) {
-            console.error(`Error when loading audio channel: ${e}`);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    async function togglePlaying() {
-        if (playing) {
-            pauseAudio();
-            pause();
-        } else {
-            playAudio();
-        }
-    }
-
+export default function ChannelThumb({ channel = {} }) {
+    const { changeTrack } = useContext(PlayerContext);
+    
     return (
         <Wrapper>
-            {loading ? (
-                <PlayToggler disabled>
-                    <PlayTogglerIcon path={mdiLoading} spin={1} />
-                </PlayToggler>
-            ) : (
-                <PlayToggler playing={playing} onClick={togglePlaying}>
-                    <PlayTogglerIcon path={playing ? mdiPause : mdiPlay} />
-                </PlayToggler>
-            )}
+            <PlayToggler onClick={() => changeTrack(channel.liveaudio.url, channel.name, channel.tagline)}>
+                <PlayTogglerIcon path={mdiPlay} />
+            </PlayToggler>
             <ChannelIcon src={channel.image ?? "https://static-cdn.sr.se/images/2388/787c76ef-8d6b-4e34-b26c-2b4036781b0c.jpg?preset=api-default-square"} />
             <HeaderWrapper color={channel.color}>
                 <Header as={Link} to={`/kanal/${channel.id}/${channel.name.replace(' ', '-')}`}>{channel.name}</Header>

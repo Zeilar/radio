@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled, { css } from 'styled-components';
 import { Home, Channel, Programs } from "./views";
-import { Navbar, ScrollToTop } from "./layout";
+import { Navbar, Player, ScrollToTop } from "./layout";
 
 export default function Main() {
     return (
@@ -17,6 +17,7 @@ export default function Main() {
                         404
                     </Route>
                 </Switch>
+                <Player />
                 <ScrollToTop />
             </Wrapper>
         </Router>
