@@ -31,6 +31,7 @@ export function PlayerContextProvider({ children }) {
             const channel = data.channel;
             setTitle(channel.name);
             setDescription(channel.tagline);
+            player.current.src = channel.liveaudio.url;
         }
     }, [data]);
 
