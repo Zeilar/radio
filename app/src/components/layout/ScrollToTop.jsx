@@ -32,8 +32,8 @@ export default function ScrollToTop() {
 const ButtonWrapper = styled(Button)`
     display: flex;
     position: fixed;
-    right: 15px;
-    bottom: 50px;
+    right: 30px;
+    bottom: 100px;
     padding: 5px;
     z-index: 100;
     transition: opacity 0.1s ease-in, transform 0.2s ease-in;
