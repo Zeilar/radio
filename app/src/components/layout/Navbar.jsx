@@ -15,7 +15,7 @@ export default function Navbar() {
                         </Brandlink>
                     </Brand>
                     <Navitem>
-                        <Navlink to="/programs">Programs</Navlink>
+                        <Navlink to="/program">Program</Navlink>
                     </Navitem>
                 </Row>
             </Nav>

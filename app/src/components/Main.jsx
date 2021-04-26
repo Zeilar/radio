@@ -10,8 +10,8 @@ export default function Main() {
                 <Navbar />
                 <Switch>
                     <Route path="/" exact component={Home} />
-                    <Route path="/channel/:id/:name?" component={Channel} />
-                    <Route path="/programs" exact component={Programs} />
+                    <Route path="/kanal/:id/:name?" component={Channel} />
+                    <Route path="/program" exact component={Programs} />
                     {/* <Route path="/schedule" exact component={Schedule} /> */}
                     <Route>
                         404

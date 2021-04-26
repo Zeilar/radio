@@ -28,7 +28,7 @@ export default function ChannelBanner({ channel = {}, channelUrl }) {
                     <ChannelLink as={NavLink} to={channelUrl} color={channel.color} exact>
                         Program
                     </ChannelLink>
-                    <ChannelLink as={NavLink} to={`${channelUrl}/schedule`} color={channel.color} exact>
+                    <ChannelLink as={NavLink} to={`${channelUrl}/tabla`} color={channel.color} exact>
                         Tablå
                     </ChannelLink>
                 </ChannelLinks>

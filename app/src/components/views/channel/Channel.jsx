@@ -50,7 +50,7 @@ export default function Channel({ match }) {
                 <>
                     <ChannelBanner channelUrl={match.url} channel={channel} />
                     <Switch>
-                        <Route path={`${match.url}/schedule`} exact>
+                        <Route path={`${match.url}/tabla`} exact>
                             <ChannelSchedule channel={channel} programs={programsQuery.data.pages} />
                         </Route>
                         <Route>
