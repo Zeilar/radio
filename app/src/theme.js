@@ -9,7 +9,7 @@ export const theme = {
         textPrimary: "15, 15, 15",
         textSecondary: "235, 235, 235",
         textMuted: "150, 150, 150",
-        borderPrimary: "240, 240, 240",
+        borderPrimary: "225, 225, 225",
         link: "0, 127, 255",
     },
     borderRadius: 3,

@@ -1,4 +1,4 @@
-import Channel from './Channel';
+import Channel from './channel/Channel';
 import Home from './Home';
 import Programs from './Programs';
 

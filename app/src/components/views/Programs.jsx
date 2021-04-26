@@ -4,7 +4,9 @@ import useFetch from '../../hooks/useFetch';
 
 export default function Programs() {
     // const { data, success } = useFetch("http://api.sr.se/api/v2/programcategories", {
+    //     params: {
 
+    //     },
     // });
 
     return (
