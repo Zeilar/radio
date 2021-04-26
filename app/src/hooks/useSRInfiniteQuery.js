@@ -13,7 +13,7 @@ export default function useSRInfiniteQuery(name = "", url = "", queryParams = {}
             .map(([key, val]) => `${key}=${val}`)
             .join("&");
 
-        return `&${params}`; // Parse to URI query parameters
+        return `&${params}`;
     }
     
     const query = useInfiniteQuery(name, async ({ pageParam = 1 }) => {

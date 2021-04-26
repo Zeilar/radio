@@ -25,8 +25,7 @@ export const header = css(({ theme }) => css`
 export const Container = styled.div`
     ${flexbox}
     padding: 30px;
-    max-width: calc(100% - 30px);
-    width: 1000px;
+    width: 1200px;
     margin: auto;
     ${({ row, col }) => css`
         flex-direction: ${col && "column"};
@@ -144,4 +143,10 @@ export const Textarea = styled.textarea.attrs({ rows: 6, cols: 50 })`
     ${input}
     width: unset;
     resize: none;
+`;
+
+export const InfiniteList = styled.div`
+    display: grid;
+    grid-gap: 15px;
+    margin-top: 15px;
 `;

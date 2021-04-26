@@ -13,6 +13,7 @@ export const GlobalStyles = createGlobalStyle`
 
     img {
         user-select: none;
+        max-width: 100%;
     }
 
     ::selection {

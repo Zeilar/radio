@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function useFetch(url, args = {}, params = {}) {
+export default function useFetch(url, args = {}) {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
     const [error, setError] = useState(false);
@@ -16,24 +16,24 @@ export default function useFetch(url, args = {}, params = {}) {
             .map(([key, val]) => `${key}=${val}`)
             .join("&");
 
-        return `?${params}`; // Parse to URI query parameters
+        return `?${params}`;
     }
 
     useEffect(() => {
         (async () => {
             try {
                 if (!url) throw new Error(`Invalid URL argument, got \`${url}\``);
-                const response = await fetch(`${url}${parseQueryParams(params)}`, args);
+                const response = await fetch(`${url}${parseQueryParams(args.params)}`, args.request);
                 const data     = await response.json();
                 setData(data);
             } catch (e) {
-                console.error(e);
-                setError(e);
+                console.error(e.message);
+                setError(e.message);
             } finally {
                 setLoading(false);
             }
         })();
-    }, [url, args, params]);
+    }, [url]);
 
     return { loading, data, error, success: !Boolean(error) };
 }
