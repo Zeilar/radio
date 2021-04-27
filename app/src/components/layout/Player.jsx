@@ -81,7 +81,7 @@ const VolumeWrapper = styled(Row).attrs({ justify: "flex-end" })`
 `;
 
 const VolumeSlider = styled.input.attrs({ type: "range", min: 0, max: 100 })`
-    
+    cursor: pointer;
 `;
 
 const VolumeIcon = styled(Icon)`

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import useFetch from '../../../hooks/useFetch';
 import { Loader, ChannelBanner } from '../../layout';
@@ -27,12 +26,6 @@ export default function Channel({ match }) {
     const channelQuery = useFetch(`http://api.sr.se/api/v2/channels/${id}`, {
         params: { format: "json" },
     });
-
-    useEffect(() => {
-        return () => {
-            // destroy audio instance
-        }
-    }, []);
 
     function downloading() {
         return programsQuery.isLoading || channelQuery.loading;

@@ -1,37 +1,19 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { H5, Row } from './styled-components';
-import { mdiPlay, mdiPause } from '@mdi/js';
-import Icon from '@mdi/react';
-import { useContext } from 'react';
-import { PlayerContext } from './contexts/PlayerContext';
+import { PlayerButton } from './layout';
 
-export default function ChannelThumb({ channel = {} }) {
-    const { changeTrack, player, playing, pause } = useContext(PlayerContext);
-
-    function isChannelPlaying() {
-        return playing && player.src === channel.liveaudio.url;
-    }
-
-    function renderPlayerButton() {
-        if (isChannelPlaying()) {
-            return <PlayTogglerIcon path={mdiPause} onClick={pause} title="Spela" />;
-        }
-        return (
-            <PlayTogglerIcon
-                path={mdiPlay}
-                onClick={() => changeTrack(channel.liveaudio.url, channel.name, channel.tagline)}
-                title="Spela"
-            />
-        );
-    }
-    
+export default function ChannelThumb({ channel = {} }) {    
     return (
         <Wrapper>
             <ChannelIcon src={channel.image ?? "https://static-cdn.sr.se/images/2388/787c76ef-8d6b-4e34-b26c-2b4036781b0c.jpg?preset=api-default-square"} />
             <HeaderWrapper color={channel.color}>
                 <Header as={Link} to={`/kanal/${channel.id}/${channel.name.replace(' ', '-')}`}>{channel.name}</Header>
-                {renderPlayerButton()}
+                <PlayerButton args={{
+                    src: channel.liveaudio.url,
+                    name: channel.name,
+                    description: channel.tagline,
+                }} />
             </HeaderWrapper>
         </Wrapper>
     );
@@ -70,11 +52,4 @@ const HeaderWrapper = styled(Row).attrs({ align: "center" })`
 const ChannelIcon = styled.img.attrs({ loading: "lazy" })`
     width: 60px;
     margin-left: 5px;
-`;
-
-const PlayTogglerIcon = styled(Icon)`
-    width: 2rem;
-    height: 2rem;
-    margin-left: auto;
-    cursor: pointer;
 `;

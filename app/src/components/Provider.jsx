@@ -11,13 +11,13 @@ export default function Provider({ children }) {
     return (
         <QueryClientProvider client={queryClient}>
             <ThemeProvider theme={theme}>
-                <PlayerContextProvider>
-                    <UserContextProvider>
-                        <ScrollToTopContextProvider>
+                <UserContextProvider>
+                    <ScrollToTopContextProvider>
+                        <PlayerContextProvider>
                             {children}
-                        </ScrollToTopContextProvider>
-                    </UserContextProvider>
-                </PlayerContextProvider>
+                        </PlayerContextProvider>
+                    </ScrollToTopContextProvider>
+                </UserContextProvider>
             </ThemeProvider>
         </QueryClientProvider>
     );

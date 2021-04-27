@@ -65,12 +65,17 @@ export function PlayerContextProvider({ children }) {
     function calculateVolume(number) {
         return number / 100;
     }
+
+    function isChannelPlaying(src) {
+        if (!player || !src) return false;
+        return playing && player.current.src === src;
+    }
     
     function changeTrack(url, title = "", description = "") {
         if (!url) return;
-        if (title) setTitle(title);
-        if (description) setDescription(description);
-        if (url) player.current.src = url;
+        setTitle(title);
+        setDescription(description);
+        player.current.src = url;
         play();
     }
 
@@ -99,6 +104,7 @@ export function PlayerContextProvider({ children }) {
         setVolume,
         toggleMute,
         muted,
+        isChannelPlaying,
     };
 
     return (
