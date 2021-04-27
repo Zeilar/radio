@@ -9,13 +9,6 @@ import { PlayerContext } from './contexts/PlayerContext';
 export default function ChannelThumb({ channel = {} }) {
     const { changeTrack, player, playing, pause } = useContext(PlayerContext);
 
-    if (channel.id === 132) {
-        // console.log(isChannelPlaying());
-        console.log(player, player.muted);
-        // console.log(player.muted, player.src === channel.liveaudio.url);
-        console.log('-');
-    }
-
     function isChannelPlaying() {
         return playing && player.src === channel.liveaudio.url;
     }
