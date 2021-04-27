@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { PlayerContext } from '../contexts/PlayerContext';
 import { Col, Row, H6 } from '../styled-components';
@@ -23,17 +23,32 @@ export default function Player() {
         volume,
         toggleMute,
         setVolume,
-        muted
+        muted,
+        togglePlaying,
     } = useContext(PlayerContext);
+
+    useEffect(() => {
+        function keyHandler(e) {
+            if (e.code === "Space") {
+                togglePlaying();
+            } else if (e.key === "m") {
+                toggleMute();
+            }
+        }
+        document.addEventListener("keyup", keyHandler);
+        return () => {
+            document.removeEventListener("keyup", keyHandler);
+        }
+    }, [togglePlaying, toggleMute]);
 
     function renderPlayButton() {
         if (loading) {
             return <PlayerIcon style={{ cursor: "default" }} path={mdiLoading} spin={1} />
         }
         if (playing) {
-            return <PlayerIcon path={mdiPause} onClick={pause} />
+            return <PlayerIcon path={mdiPause} onClick={pause} title="Pausa" />
         }
-        return <PlayerIcon path={mdiPlay} onClick={play} />
+        return <PlayerIcon path={mdiPlay} onClick={play} title="Spela" />
     }
 
     function renderVolumeIcon() {
@@ -64,7 +79,7 @@ export default function Player() {
 }
 
 const Wrapper = styled(Row).attrs({ justify: "center", align: "center" })`
-    position: fixed;
+    position: sticky;
     bottom: 0;
     left: 0;
     width: 100%;

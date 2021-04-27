@@ -2,79 +2,33 @@ import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { chunk } from '../../../helpers';
 import { Col, H5 } from '../../styled-components';
-import { formatForUrl } from './Channel';
+import { mdiHeart } from '@mdi/js';
+import Icon from '@mdi/react';
+import * as Styles from './channel.styles';
 
-const columns = 3;
-export default function ChannelPrograms({ channel, programs }) {
+export default function ChannelPrograms({ channel, programs, formatForUrl }) {
+    const columns = 3;
     return (
-        <Programs>
+        <Styles.Programs columns={columns}>
             {programs.map(page => (
                 chunk(page.data.programs, columns).map((column, i) => (
-                    <ProgramColumn key={i}>
+                    <Styles.ProgramColumn key={i}>
                         {column.map(program => (
-                            <Program color={channel.color} key={program.id} as="article">
-                                <ProgramImage src={program.programimagetemplatewide} />
-                                <ProgramCard>
-                                    <ProgramName as={NavLink} to={`/program/${program.id}/${formatForUrl(program.name)}`}>
+                            <Styles.Program color={channel.color} key={program.id} as="article">
+                                <Icon path={mdiHeart} size={1} style={{ position: "absolute", right: 10, top: 10, color: "red" }} />
+                                <Styles.ProgramImage src={program.programimagetemplatewide} />
+                                <Styles.ProgramCard>
+                                    <Styles.ProgramName as={NavLink} to={`/program/${program.id}/${formatForUrl(program?.name)}`}>
                                         {program.name}
-                                    </ProgramName>
-                                    <ProgramInfo>{program.broadcastinfo}</ProgramInfo>
-                                    <ProgramDescription>{program.description}</ProgramDescription>
-                                </ProgramCard>
-                            </Program>
+                                    </Styles.ProgramName>
+                                    <Styles.ProgramInfo>{program.broadcastinfo}</Styles.ProgramInfo>
+                                    <Styles.ProgramDescription>{program.description}</Styles.ProgramDescription>
+                                </Styles.ProgramCard>
+                            </Styles.Program>
                         ))}
-                    </ProgramColumn>
+                    </Styles.ProgramColumn>
                 ))
             ))}
-        </Programs>
+        </Styles.Programs>
     );
 }
-
-const Programs = styled.div`
-    display: grid;
-    grid-template-columns: repeat(${columns}, 1fr);
-    grid-gap: 15px;
-    margin-top: 15px;
-`;
-
-const Program = styled(Col)`
-    ${({ theme, color }) => css`
-        border: 1px solid rgb(${theme.color.border});
-        border-bottom: 4px solid #${color};
-        background-color: rgb(${theme.color.bodyLight});
-        border-bottom-left-radius: ${theme.borderRadius}px;
-        border-bottom-right-radius: ${theme.borderRadius}px;
-    `}
-`;
-
-const ProgramCard = styled(Col).attrs({ align: "flex-start" })`
-    padding: 20px;
-`;
-
-const ProgramDescription = styled.p`
-    margin-top: 15px;
-    font-family: Roboto;
-`;
-
-const ProgramName = styled(H5).attrs({ exact: true })`
-    color: rgb(${({ theme }) => theme.color.textPrimary});
-    text-decoration: none;
-    &:hover {
-        text-decoration: underline;
-    }
-`;
-
-const ProgramInfo = styled.p`
-    display: inline;
-    font: italic 0.9rem Poppins;
-    margin-top: 5px;
-`;
-
-const ProgramImage = styled.img`
-    object-fit: cover;
-`;
-
-const ProgramColumn = styled.div`
-    display: grid;
-    grid-gap: 15px;
-`;

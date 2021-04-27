@@ -13,11 +13,11 @@ export default function ChannelBanner({ channel = {}, channelUrl }) {
                     <ChannelType>{channel.channeltype}</ChannelType>
                 </ChannelMeta>
                 <ChannelNav>
-                    <PlayerButton args={{
+                    <PlayerButton color={channel.color} args={{
                         src: channel.liveaudio.url,
                         name: channel.name,
                         description: channel.tagline,
-                    }} color={channel.color} />
+                    }} />
                     <ChannelLinks>
                         <ChannelLink as={NavLink} to={`${channelUrl}/tabla`} color={channel.color} exact>
                             Tablå

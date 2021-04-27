@@ -24,5 +24,6 @@ export const GlobalStyles = createGlobalStyle`
 
     body {
         font-family: Libre Franklin;
+        min-height: 100vh;
     }
 `;

@@ -1,12 +1,15 @@
-import styled, { css } from 'styled-components';
 import useSRInfiniteQuery from '../../../hooks/useSRInfiniteQuery';
 import { Loader } from '../../layout';
 import dayjs from 'dayjs';
 import { chunk } from '../../../helpers';
-import { Col } from '../../styled-components';
+import { NavLink } from 'react-router-dom';
+import { mdiHeart } from '@mdi/js';
+import Icon from '@mdi/react';
+import * as Styles from './channel.styles';
 
-const columns = 3;
-export default function ChannelSchedule({ channel }) {
+export default function ChannelSchedule({ channel, formatForUrl }) {
+    const columns = 3;
+
     const { data: programs, isSuccess, isLoading } = useSRInfiniteQuery(
         `channel/${channel.id}/tabla`,
         "http://api.sr.se/api/v2/scheduledepisodes",
@@ -16,49 +19,38 @@ export default function ChannelSchedule({ channel }) {
         }
     );
 
-    function parseSRDate(date) {
-        return date.match(/([0-9]+)/g)[0];
+    function dateToHHMM(date) {
+        return dayjs(new Date(Number(date.match(/([0-9]+)/g)[0]))).format("HH:mm");
     }
 
-    console.log(programs);
+    console.log(programs?.pages[0]?.data?.schedule);
 
     return (
         <>
             {isLoading && <Loader />}
-            <Programs>
+            <Styles.Programs columns={columns}>
                 {isSuccess && programs.pages.map(page => (
                     chunk(page.data.schedule, columns).map((column, i) => (
-                        <ProgramColumn key={i}>
+                        <Styles.ProgramColumn key={i}>
                             {column.map((program, j) => (
-                                <Program color={channel.color} key={`${i}${j}`} as="article">
-                                    {program.title}
-                                </Program>
+                                <Styles.Program color={channel.color} key={`${program.program.id}-${j}`} as="article">
+                                    <Icon path={mdiHeart} size={1} style={{ position: "absolute", right: 10, top: 10, color: "red" }} />
+                                    <Styles.ProgramImage src={program.imageurltemplate} />
+                                    <Styles.ProgramCard>
+                                        <Styles.ProgramName as={NavLink} to={`/program/${program.program.id}/${formatForUrl(program.title)}`}>
+                                            {program.title}
+                                        </Styles.ProgramName>
+                                        <Styles.ProgramInfo>
+                                            {dateToHHMM(program.starttimeutc)} - {dateToHHMM(program.endtimeutc)}
+                                        </Styles.ProgramInfo>
+                                        <Styles.ProgramDescription>{program.description}</Styles.ProgramDescription>
+                                    </Styles.ProgramCard>
+                                </Styles.Program>
                             ))}
-                        </ProgramColumn>
+                        </Styles.ProgramColumn>
                     ))
                 ))}
-            </Programs>
+            </Styles.Programs>
         </>
     );
 }
-
-const Programs = styled.div`
-    display: grid;
-    grid-template-columns: repeat(${columns}, 1fr);
-    grid-gap: 15px;
-    margin-top: 15px;
-`;
-
-const ProgramColumn = styled.div`
-    
-`;
-
-const Program = styled(Col)`
-    ${({ theme, color }) => css`
-        border: 1px solid rgb(${theme.color.border});
-        border-bottom: 4px solid #${color};
-        background-color: rgb(${theme.color.bodyLight});
-        border-bottom-left-radius: ${theme.borderRadius}px;
-        border-bottom-right-radius: ${theme.borderRadius}px;
-    `}
-`;

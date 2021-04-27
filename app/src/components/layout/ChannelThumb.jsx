@@ -9,11 +9,11 @@ export default function ChannelThumb({ channel = {} }) {
             <ChannelIcon src={channel.image ?? "https://static-cdn.sr.se/images/2388/787c76ef-8d6b-4e34-b26c-2b4036781b0c.jpg?preset=api-default-square"} />
             <HeaderWrapper color={channel.color}>
                 <Header as={Link} to={`/kanal/${channel.id}/${channel.name.replace(' ', '-')}`}>{channel.name}</Header>
-                <PlayerButton args={{
+                <PlayerButton color={channel.color} args={{
                     src: channel.liveaudio.url,
                     name: channel.name,
                     description: channel.tagline,
-                }} color={channel.color} />
+                }} />
             </HeaderWrapper>
         </Wrapper>
     );

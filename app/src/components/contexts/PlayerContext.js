@@ -82,6 +82,10 @@ export function PlayerContextProvider({ children }) {
     function toggleMute() {
         setMuted(muted => !muted);
     }
+    
+    function togglePlaying() {
+        setPlaying(playing => !playing);
+    }
 
     function play() {
         setPlaying(true);
@@ -105,6 +109,7 @@ export function PlayerContextProvider({ children }) {
         toggleMute,
         muted,
         isChannelPlaying,
+        togglePlaying,
     };
 
     return (

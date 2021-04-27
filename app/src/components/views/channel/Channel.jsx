@@ -7,14 +7,6 @@ import ChannelPrograms from './ChannelPrograms';
 import ChannelSchedule from './ChannelSchedule';
 import { Route, Switch } from 'react-router';
 
-export function formatForUrl(string) {
-    return string.replace(" ", "-");
-}
-
-export function getChannelUrl(channel = {}) {
-    return `/channel/${channel.id}/${formatForUrl(channel.name)}`;
-}
-
 export default function Channel({ match }) {
     const { id } = match.params;
 
@@ -26,6 +18,11 @@ export default function Channel({ match }) {
     const channelQuery = useFetch(`http://api.sr.se/api/v2/channels/${id}`, {
         params: { format: "json" },
     });
+    
+    function formatForUrl(string) {
+        if (!string) return "";
+        return string.replace(" ", "-");
+    }
 
     function downloading() {
         return programsQuery.isLoading || channelQuery.loading;
@@ -45,10 +42,10 @@ export default function Channel({ match }) {
                     <ChannelBanner channelUrl={match.url} channel={channel} />
                     <Switch>
                         <Route path={`${match.url}/tabla`} exact>
-                            <ChannelSchedule channel={channel} />
+                            <ChannelSchedule formatForUrl={formatForUrl} channel={channel} />
                         </Route>
                         <Route>
-                            <ChannelPrograms channel={channel} programs={programsQuery.data.pages} />
+                            <ChannelPrograms formatForUrl={formatForUrl} channel={channel} programs={programsQuery.data.pages} />
                         </Route>
                     </Switch>
                 </>
