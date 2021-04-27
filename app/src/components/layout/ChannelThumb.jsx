@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { H5, Row } from './styled-components';
-import { PlayerButton } from './layout';
+import { H5, Row } from '../styled-components';
+import { PlayerButton } from '.';
 
 export default function ChannelThumb({ channel = {} }) {    
     return (

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ChannelThumb from '../ChannelThumb';
+import ChannelThumb from '../layout/ChannelThumb';
 import { Button, Col, Container, fadeIn } from '../styled-components';
 import { Loader } from '../layout';
 import useSRInfiniteQuery from '../../hooks/useSRInfiniteQuery';

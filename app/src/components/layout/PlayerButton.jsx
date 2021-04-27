@@ -1,5 +1,5 @@
 import {  useContext } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { PlayerContext } from '../contexts/PlayerContext';
 import { mdiPlay, mdiPause } from '@mdi/js';
 import Icon from '@mdi/react';
@@ -26,4 +26,7 @@ const Toggler = styled(Icon)`
     height: 2.5rem;
     margin-left: auto;
     cursor: pointer;
+    ${({ color }) => css`
+        fill: #${color};
+    `}
 `;
