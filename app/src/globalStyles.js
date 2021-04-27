@@ -11,7 +11,8 @@ export const GlobalStyles = createGlobalStyle`
         list-style: none;
     }
 
-    img {
+    img,
+    svg {
         user-select: none;
         max-width: 100%;
     }

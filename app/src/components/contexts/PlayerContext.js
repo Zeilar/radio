@@ -87,6 +87,7 @@ export function PlayerContextProvider({ children }) {
     }
 
     const values = {
+        player: player.current,
         changeTrack,
         play,
         pause,
