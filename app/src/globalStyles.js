@@ -23,7 +23,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        font-family: Libre Franklin;
+        font-family: Poppins;
         min-height: 100vh;
     }
 `;

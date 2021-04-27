@@ -1,7 +1,7 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { PlayerContext } from '../contexts/PlayerContext';
-import { Col, Row, H6 } from '../styled-components';
+import { Col, Row, H5 } from '../styled-components';
 import {
     mdiPlay,
     mdiPause,
@@ -24,22 +24,7 @@ export default function Player() {
         toggleMute,
         setVolume,
         muted,
-        togglePlaying,
     } = useContext(PlayerContext);
-
-    useEffect(() => {
-        function keyHandler(e) {
-            if (e.code === "Space") {
-                togglePlaying();
-            } else if (e.key === "m") {
-                toggleMute();
-            }
-        }
-        document.addEventListener("keyup", keyHandler);
-        return () => {
-            document.removeEventListener("keyup", keyHandler);
-        }
-    }, [togglePlaying, toggleMute]);
 
     function renderPlayButton() {
         if (loading) {
@@ -80,6 +65,7 @@ export default function Player() {
 
 const Wrapper = styled(Row).attrs({ justify: "center", align: "center" })`
     position: sticky;
+    margin-top: auto;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -115,7 +101,7 @@ const Meta = styled(Col)`
     white-space: nowrap;
 `;
 
-const Title = styled(H6)`
+const Title = styled(H5)`
     
 `;
 

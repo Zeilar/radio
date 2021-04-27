@@ -26,7 +26,7 @@ export const Container = styled.div`
     ${flexbox}
     padding: 30px;
     width: 1200px;
-    margin: auto;
+    margin: 0 auto;
     ${({ row, col }) => css`
         flex-direction: ${col && "column"};
         flex-direction: ${row && "row"};
