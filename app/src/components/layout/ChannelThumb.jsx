@@ -13,7 +13,7 @@ export default function ChannelThumb({ channel = {} }) {
                     src: channel.liveaudio.url,
                     name: channel.name,
                     description: channel.tagline,
-                }} />
+                }} color={channel.color} />
             </HeaderWrapper>
         </Wrapper>
     );
