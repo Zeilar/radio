@@ -52,6 +52,7 @@ export const Button = styled.button.attrs({ justify: "center", align: "center" }
     font: bold 1.15rem Poppins;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
     transition: 0.15s;
+    min-width: 3rem;
     height: 3rem;
     ${({ theme }) => css`
         color: rgb(${theme.color.textSecondary});
