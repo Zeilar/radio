@@ -5,7 +5,7 @@ import { mdiRadio } from '@mdi/js';
 import Icon from '@mdi/react';
 import { useContext, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
-import { Login, Register } from '../views';
+import { Login, Register } from '../views/modals';
 
 export default function Navbar() {
     const { isLoggedIn } = useContext(UserContext);

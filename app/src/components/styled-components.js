@@ -45,14 +45,18 @@ export const fadeIn = css`
     animation: fade 0.25s forwards;
 `;
 
-export const Button = styled.button(({ theme }) => css`
-    color: rgb(${theme.color.textSecondary});
-    background-color: rgb(${theme.color.brand});
+export const Button = styled.button.attrs({ justify: "center", align: "center" })`
+    ${flexbox}
     border: 0;
     padding: 12px 40px;
     font: bold 1.15rem Poppins;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
     transition: 0.15s;
+    height: 3rem;
+    ${({ theme }) => css`
+        color: rgb(${theme.color.textSecondary});
+        background-color: rgb(${theme.color.brand});
+    `}
     &:not([disabled]):hover {
         background-color: rgb(25, 25, 25);
     }
@@ -60,7 +64,7 @@ export const Button = styled.button(({ theme }) => css`
         cursor: wait;
         background-color: rgb(85, 85, 85);
     }
-`);
+`;
 
 export const H1 = styled.h1`
     ${header}

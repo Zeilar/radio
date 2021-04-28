@@ -40,6 +40,7 @@ export function UserContextProvider({ children }) {
             if (response.status !== 200) {
                 throw new Error();
             }
+            delete data.password;
             setUser(data);
             return true;
         } catch (e) {

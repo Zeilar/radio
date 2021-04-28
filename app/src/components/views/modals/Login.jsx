@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 import styled, { css } from 'styled-components';
-import { UserContext } from '../contexts/UserContext';
-import { Button, Col, H2 } from '../styled-components';
-import { useClickOutside } from '../../hooks';
+import { UserContext } from '../../contexts/UserContext';
+import { Col, H2 } from '../../styled-components';
+import { useClickOutside } from '../../../hooks';
 import { mdiClose } from '@mdi/js';
 import Icon from '@mdi/react';
+import LoadingButton from '../../misc/LoadingButton';
 
 export default function Login({ visible, close, openModal }) {
     const { login, isLoggedIn } = useContext(UserContext);
@@ -44,7 +45,9 @@ export default function Login({ visible, close, openModal }) {
                 <Header>Logga in</Header>
                 <RedirectWrapper>
                     Ej medlem?&nbsp;
-                    <RedirectLink onClick={() => openModal("register")}>Skapa ett konto</RedirectLink>
+                    <RedirectLink onClick={() => openModal("register")}>
+                        Skapa ett konto
+                    </RedirectLink>
                 </RedirectWrapper>
                 <InputRow>
                     <Label>Användarnamn</Label>
@@ -54,7 +57,9 @@ export default function Login({ visible, close, openModal }) {
                     <Label>Lösenord</Label>
                     <Input value={password} onChange={e => setPassword(e.target.value)} />
                 </InputRow>
-                <Button disabled={loading}>Skicka</Button>
+                <LoadingButton loading={loading}>
+                    Logga in
+                </LoadingButton>
             </Content>
         </Wrapper>
     );
@@ -70,7 +75,6 @@ const Content = styled(Col)`
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
     min-width: 500px;
     ${({ theme }) => css`
-        border: 2px solid rgb(${theme.color.brand});
         background-color: rgb(${theme.color.bodyLight});
     `}
 `;
