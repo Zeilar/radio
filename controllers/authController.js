@@ -18,9 +18,7 @@ async function authenticate(req, res) {
 
 function logout(req, res) {
     try {
-        console.log(req.session.user);
         delete req.session.user;
-        console.log(req.session.user);
         res.status(200).end();
     } catch (e) {
         res.status(500).end();

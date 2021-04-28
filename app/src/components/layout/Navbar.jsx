@@ -8,7 +8,7 @@ import { UserContext } from '../contexts/UserContext';
 import { Login, Register } from '../views/modals';
 
 export default function Navbar() {
-    const { isLoggedIn, logout } = useContext(UserContext);
+    const { isLoggedIn, logout, loading } = useContext(UserContext);
 
     const [activeModal, setActiveModal] = useState();
 
@@ -33,7 +33,7 @@ export default function Navbar() {
                     </Brandlink>
                 </Brand>
                 <Row as={Navlist}>
-                    {!isLoggedIn && (
+                    {!loading && !isLoggedIn && (
                         <>
                             <ModalNavitem>
                                 <ModalButton onClick={() => openModal("login")}>
@@ -47,7 +47,7 @@ export default function Navbar() {
                             </ModalNavitem>
                         </>
                     )}
-                    {isLoggedIn && (
+                    {!loading && isLoggedIn && (
                         <Navitem>
                             <ModalButton onClick={logout}>Logga out</ModalButton>
                         </Navitem>
