@@ -1,6 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-const bcrypt = require('bcrypt');
 
 async function findOrFail(id) {
     id = Number(id);
@@ -44,34 +43,6 @@ async function getUserById(req, res) {
             return res.sendStatus(404);
         }
         return res.json(user);
-    } catch (e) {
-        console.error(e);
-        return res.sendStatus(500);
-    }
-}
-
-async function register(req, res) {
-    const { username, password } = req.body;
-    if (!username || !password) {
-        return res.sendStatus(400);
-    }
-    try {
-        const user = await prisma.user.findUnique({ where: { username } });
-        if (user) {
-            return res.sendStatus(422);
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const createdUser = await prisma.user.create({
-            data: {
-                username,
-                password: hashedPassword,
-            },
-        });
-        delete createdUser.password;
-        req.session.user = createdUser;
-        return res.sendStatus(200);
     } catch (e) {
         console.error(e);
         return res.sendStatus(500);
@@ -130,7 +101,6 @@ async function deleteUser(req, res) {
 module.exports = {
     getUsers,
     getUserById,
-    register,
     updateUser,
     deleteUser,
 };

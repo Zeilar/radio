@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import { theme } from '../theme';
+import { theme } from '../styles/theme';
 import { UserContextProvider } from './contexts/UserContext';
 import { ScrollToTopContextProvider } from './contexts/ScrollToTopContext';
 import { PlayerContextProvider } from './contexts/PlayerContext';
@@ -10,15 +10,15 @@ const queryClient = new QueryClient();
 export default function Provider({ children }) {
     return (
         <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={theme}>
-                <UserContextProvider>
+            <UserContextProvider>
+                <ThemeProvider theme={theme}>
                     <ScrollToTopContextProvider>
                         <PlayerContextProvider>
                             {children}
                         </PlayerContextProvider>
                     </ScrollToTopContextProvider>
-                </UserContextProvider>
-            </ThemeProvider>
+                </ThemeProvider>
+            </UserContextProvider>
         </QueryClientProvider>
     );
 }

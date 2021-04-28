@@ -33,7 +33,7 @@ const ButtonWrapper = styled(Button)`
     display: flex;
     position: fixed;
     right: 30px;
-    bottom: 100px;
+    bottom: 150px;
     padding: 5px;
     z-index: 100;
     transition: opacity 0.1s ease-in, transform 0.2s ease-in;

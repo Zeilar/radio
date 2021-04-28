@@ -51,13 +51,10 @@ export const Button = styled.button(({ theme }) => css`
     background-color: rgb(${theme.color.brand});
     border: 0;
     padding: 12px 40px;
-    font-size: 1.15rem;
-    font-weight: bold;
-    font-family: Poppins;
+    font: bold 1.15rem Poppins;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
     &[disabled] {
         cursor: default;
-        opacity: 0.5;
     }
 `);
 

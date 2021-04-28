@@ -76,6 +76,7 @@ const ChannelLink = styled(H4)`
     ${({ color }) => css`
         &.active {
             color: #${color};
+            border-bottom: 3px solid #${color};
         }
     `}
 `;

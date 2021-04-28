@@ -1,7 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import styled, { css } from 'styled-components';
 import { chunk } from '../../../helpers';
-import { Col, H5 } from '../../styled-components';
 import { mdiHeart } from '@mdi/js';
 import Icon from '@mdi/react';
 import * as Styles from './channel.styles';

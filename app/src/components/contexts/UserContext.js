@@ -4,24 +4,55 @@ export const UserContext = createContext();
 
 export function UserContextProvider({ children }) {
     const [user, setUser] = useState();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         (async () => {
             try {
                 const response = await fetch("http://localhost:3000/api/auth");
-                const data = await response.json();
-                setUser(data);
+                if (response.status === 200) {
+                    const data = response.json();
+                    setUser(data);
+                }
             } catch (e) {
+                console.error(e.message);
                 setUser(null);
+            } finally {
+                setLoading(false);
             }
         })();
     }, []);
 
     function updateUser(user) {
-        if (!user) {
-            return;
+        if (!user) return;
+        setUser(p => ({ ...p, user }));
+    }
+
+    async function loginOrRegister(url, data) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/auth/${url}`, {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (response.status !== 200) {
+                throw new Error();
+            }
+            setUser(data);
+            return true;
+        } catch (e) {
+            return false;
         }
-        setUser(user);
+    }
+
+    async function register(data) {
+        return await loginOrRegister("register", data);
+    }
+
+    async function login(data) {
+        return await loginOrRegister("login", data);
     }
 
     async function logout() {
@@ -34,15 +65,14 @@ export function UserContextProvider({ children }) {
         }
     }
 
-    const isLoggedIn = Boolean(user);
-    const loading = user === undefined;
-
     const values = {
+        isLoggedIn: Boolean(user),
         user,
-        isLoggedIn,
         loading,
         updateUser,
         logout,
+        login,
+        register,
     };
 
     return (

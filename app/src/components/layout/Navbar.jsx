@@ -3,17 +3,45 @@ import styled, { css } from 'styled-components';
 import { Row, flexbox, Container } from '../styled-components';
 import { mdiRadio } from '@mdi/js';
 import Icon from '@mdi/react';
+import { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../contexts/UserContext';
+import { Login, Register } from '../views';
 
 export default function Navbar() {
+    const { isLoggedIn } = useContext(UserContext);
+
+    const [loginOpen, setLoginOpen] = useState(false);
+    const [registerOpen, setRegisterOpen] = useState(false);
+
+    function openLogin() {
+        setLoginOpen(true);
+    }
+
+    function openRegister() {
+        setRegisterOpen(true);
+    }
+
     return (
         <Header as="header">
+            <Login visible={loginOpen} close={() => setLoginOpen(false)} />
+            <Register visible={registerOpen} close={() => setRegisterOpen(false)} />
             <Nav as="nav">
+                <Brand>
+                    <Brandlink>
+                        Angelin <BrandIcon /> Radio
+                    </Brandlink>
+                </Brand>
                 <Row as={Navlist}>
-                    <Brand>
-                        <Brandlink>
-                            Angelin <BrandIcon /> Radio
-                        </Brandlink>
-                    </Brand>
+                    {!isLoggedIn && (
+                        <>
+                            <ModalNavitem>
+                                <button onClick={openLogin}>Logga in</button>
+                            </ModalNavitem>
+                            <ModalNavitem>
+                                <button onClick={openRegister}>Registrera</button>
+                            </ModalNavitem>
+                        </>
+                    )}
                     <Navitem>
                         <Navlink to="/program">Program</Navlink>
                     </Navitem>
@@ -41,7 +69,9 @@ const Nav = styled(Container)`
 `;
 
 const Navlist = styled.ul.attrs({ align: "center" })`
-    flex: 1;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 30px;
 `;
 
 const Navitem = styled.li`
@@ -49,7 +79,11 @@ const Navitem = styled.li`
     align-items: center;
 `;
 
-const Brand = styled(Navitem)`
+const ModalNavitem = styled(Navitem)`
+    
+`;
+
+const Brand = styled.span.attrs({ align: "center" })`
     ${flexbox}
     margin-right: auto;
 `;
