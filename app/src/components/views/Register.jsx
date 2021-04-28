@@ -14,21 +14,14 @@ export default function Login({ visible, close }) {
     const container = useClickOutside(close);
     
     useEffect(() => {
+        const body = document.querySelector("body");
+        body.style.overflow = "hidden";
         return () => {
-            document.querySelector("body").style.overflow = null;
+            body.style.overflow = null;
         }
     }, []);
 
-    useEffect(() => {
-        const body = document.querySelector("body");
-        if (visible) {
-            body.style.overflow = "hidden";
-        } else {
-            body.style.overflow = null;
-        }
-    }, [visible]);
-
-    if (isLoggedIn) {
+    if (isLoggedIn || !visible) {
         return null;
     }
 
@@ -37,7 +30,7 @@ export default function Login({ visible, close }) {
         setLoading(true);
         const success = await login({ username, password });
         setLoading(false);
-        console.log('login success? ', success);
+        if (success) close();
     }
 
     return (
@@ -79,16 +72,6 @@ const Wrapper = styled(Col)`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.65);
-    display: none;
-    ${Content} {
-        display: none;
-    }
-    ${({ visible }) => visible && css`
-        display: block;
-        ${Content} {
-            display: flex;
-        }
-    `}
 `;
 
 const Header = styled(H2)`
