@@ -35,7 +35,11 @@ export default function Login({ visible, close, openModal }) {
         setLoading(true);
         const success = await register({ username, password });
         setLoading(false);
-        if (success) close();
+        if (success) {
+            setUsername('');
+            setPassword('');
+            close();
+        }
     }
 
     return (
