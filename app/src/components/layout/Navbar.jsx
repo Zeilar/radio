@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { Row, flexbox, Container, Button } from '../styled-components';
+import { Row, flexbox, Container } from '../styled-components';
 import { mdiRadio } from '@mdi/js';
 import Icon from '@mdi/react';
 import { useContext, useState } from 'react';
@@ -10,21 +10,22 @@ import { Login, Register } from '../views';
 export default function Navbar() {
     const { isLoggedIn } = useContext(UserContext);
 
-    const [loginOpen, setLoginOpen] = useState(false);
-    const [registerOpen, setRegisterOpen] = useState(false);
+    const [activeModal, setActiveModal] = useState();
 
-    function openLogin() {
-        setLoginOpen(true);
+    function closeModals() {
+        setActiveModal(null);
     }
 
-    function openRegister() {
-        setRegisterOpen(true);
+    function openModal(modal) {
+        setActiveModal(modal);
     }
 
     return (
         <Header as="header">
-            <Login visible={loginOpen} close={() => setLoginOpen(false)} />
-            <Register visible={registerOpen} close={() => setRegisterOpen(false)} />
+            <ModalsWrapper visible={activeModal != null}>
+                <Login visible={activeModal === "login"} close={closeModals} openModal={openModal} />
+                <Register visible={activeModal === "register"} close={closeModals} openModal={openModal} />
+            </ModalsWrapper>
             <Nav as="nav">
                 <Brand>
                     <Brandlink>
@@ -35,10 +36,14 @@ export default function Navbar() {
                     {!isLoggedIn && (
                         <>
                             <ModalNavitem>
-                                <ModalButton onClick={openLogin}>Logga in</ModalButton>
+                                <ModalButton onClick={() => openModal("login")}>
+                                    Logga in
+                                </ModalButton>
                             </ModalNavitem>
                             <ModalNavitem>
-                                <ModalButton onClick={openRegister}>Registrera</ModalButton>
+                                <ModalButton onClick={() => openModal("register")}>
+                                    Registrera
+                                </ModalButton>
                             </ModalNavitem>
                         </>
                     )}
@@ -77,6 +82,19 @@ const Navlist = styled.ul.attrs({ align: "center" })`
 const Navitem = styled.li`
     display: flex;
     align-items: center;
+`;
+
+const ModalsWrapper = styled.div`
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: 0.25s;
+    pointer-events: none;
+    ${({ visible }) => visible && css`
+        background-color: rgba(0, 0, 0, 0.65);
+    `}
 `;
 
 const ModalNavitem = styled(Navitem)`

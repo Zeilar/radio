@@ -4,14 +4,14 @@ import { UserContext } from '../contexts/UserContext';
 import { Button, Col, H2 } from '../styled-components';
 import { useClickOutside } from '../../hooks';
 
-export default function Login({ visible, close }) {
+export default function Login({ visible, close, openModal }) {
     const { login, isLoggedIn } = useContext(UserContext);
 
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const container = useClickOutside(close);
+    const container = useClickOutside(close, visible);
     
     useEffect(() => {
         return () => {
@@ -20,12 +20,7 @@ export default function Login({ visible, close }) {
     }, []);
 
     useEffect(() => {
-        const body = document.querySelector("body");
-        if (visible) {
-            body.style.overflow = "hidden";
-        } else {
-            body.style.overflow = null;
-        }
+        document.querySelector("body").overflow = visible ? "hidden" : null;
     }, [visible]);
 
     if (isLoggedIn) {
@@ -44,6 +39,10 @@ export default function Login({ visible, close }) {
         <Wrapper as="form" onSubmit={submit} visible={visible}>
             <Content ref={container}>
                 <Header>Logga in</Header>
+                <RedirectWrapper>
+                    Ej medlem?&nbsp;
+                    <RedirectLink onClick={() => openModal("register")}>Skapa ett konto</RedirectLink>
+                </RedirectWrapper>
                 <InputRow>
                     <Label>Användarnamn</Label>
                     <Input value={username} onChange={e => setUsername(e.target.value)} />
@@ -87,7 +86,6 @@ const Wrapper = styled(Col)`
         pointer-events: none;
     }
     ${({ visible }) => visible && css`
-        background-color: rgba(0, 0, 0, 0.65);
         display: block;
         pointer-events: all;
         opacity: 1;
@@ -100,7 +98,16 @@ const Wrapper = styled(Col)`
 `;
 
 const Header = styled(H2)`
+    margin-bottom: 10px;
+`;
+
+const RedirectWrapper = styled.p`
     margin-bottom: 50px;
+`;
+
+const RedirectLink = styled.span`
+    text-decoration: underline;
+    cursor: pointer;
 `;
 
 const InputRow = styled(Col)`
