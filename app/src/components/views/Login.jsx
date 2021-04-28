@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 import { UserContext } from '../contexts/UserContext';
 import { Button, Col, H2 } from '../styled-components';
 import { useClickOutside } from '../../hooks';
+import { mdiClose } from '@mdi/js';
+import Icon from '@mdi/react';
 
 export default function Login({ visible, close, openModal }) {
     const { login, isLoggedIn } = useContext(UserContext);
@@ -38,6 +40,7 @@ export default function Login({ visible, close, openModal }) {
     return (
         <Wrapper as="form" onSubmit={submit} visible={visible}>
             <Content ref={container}>
+                <Close onClick={close} />
                 <Header>Logga in</Header>
                 <RedirectWrapper>
                     Ej medlem?&nbsp;
@@ -128,4 +131,13 @@ const Input = styled.input.attrs({ type: "text" })`
     &:focus {
         border-color: black;
     }
+`;
+
+const Close = styled(Icon).attrs({ path: mdiClose })`
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
 `;
