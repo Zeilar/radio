@@ -43,16 +43,16 @@ export default function Login({ visible, close }) {
     return (
         <Wrapper as="form" onSubmit={submit} visible={visible}>
             <Content ref={container}>
-                <Header>Login</Header>
+                <Header>Logga in</Header>
                 <InputRow>
-                    <Label>Username</Label>
+                    <Label>Användarnamn</Label>
                     <Input value={username} onChange={e => setUsername(e.target.value)} />
                 </InputRow>
                 <InputRow>
-                    <Label>Password</Label>
+                    <Label>Lösenord</Label>
                     <Input value={password} onChange={e => setPassword(e.target.value)} />
                 </InputRow>
-                <Button>Submit</Button>
+                <Button disabled={loading}>Skicka</Button>
             </Content>
         </Wrapper>
     );

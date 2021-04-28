@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { Row, flexbox, Container } from '../styled-components';
+import { Row, flexbox, Container, Button } from '../styled-components';
 import { mdiRadio } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { Login, Register } from '../views';
 
@@ -35,10 +35,10 @@ export default function Navbar() {
                     {!isLoggedIn && (
                         <>
                             <ModalNavitem>
-                                <button onClick={openLogin}>Logga in</button>
+                                <ModalButton onClick={openLogin}>Logga in</ModalButton>
                             </ModalNavitem>
                             <ModalNavitem>
-                                <button onClick={openRegister}>Registrera</button>
+                                <ModalButton onClick={openRegister}>Registrera</ModalButton>
                             </ModalNavitem>
                         </>
                     )}
@@ -88,12 +88,13 @@ const Brand = styled.span.attrs({ align: "center" })`
     margin-right: auto;
 `;
 
-const Navlink = styled(NavLink).attrs({ exact: true })`
+const navlink = css`
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
     text-decoration: none;
     padding: 16px 0;
     user-select: none;
+    font: inherit;
     font-weight: bold;
     height: 100%;
     ${({ theme }) => css`
@@ -105,6 +106,16 @@ const Navlink = styled(NavLink).attrs({ exact: true })`
             color: rgb(${theme.color.link});
         }
     `}
+`;
+
+const Navlink = styled(NavLink).attrs({ exact: true })`
+    ${navlink}
+`;
+
+const ModalButton = styled.button`
+    ${navlink}
+    background: none;
+    border: 0;
 `;
 
 const Brandlink = styled(NavLink).attrs({ align: "center", to: "/", exact: true })`

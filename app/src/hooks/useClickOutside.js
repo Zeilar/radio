@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export default function useClickOut(callback) {
+export default function useClickOut(callback, event = "mousedown") {
     const ref = useRef();
 
     useEffect(() => {
@@ -9,11 +9,11 @@ export default function useClickOut(callback) {
                 callback();
             }
         }
-        document.addEventListener("mouseup", clickHandler);
+        document.addEventListener(event, clickHandler);
         return () => {
-            document.removeEventListener("mouseup", clickHandler);
+            document.removeEventListener(event, clickHandler);
         }
-    }, [callback]);
+    }, [callback, event]);
 
     return ref;
 }

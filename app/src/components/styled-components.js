@@ -46,19 +46,18 @@ export const fadeIn = css`
 `;
 
 export const Button = styled.button(({ theme }) => css`
-    cursor: pointer;
     color: rgb(${theme.color.textSecondary});
     background-color: rgb(${theme.color.brand});
     border: 0;
     padding: 12px 40px;
     font: bold 1.15rem Poppins;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
-    transition: 0.25s;
+    transition: 0.15s;
     &:not([disabled]):hover {
         background-color: rgb(25, 25, 25);
     }
     &[disabled] {
-        cursor: default;
+        cursor: wait;
         background-color: rgb(85, 85, 85);
     }
 `);

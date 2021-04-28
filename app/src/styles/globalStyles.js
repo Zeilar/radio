@@ -27,6 +27,10 @@ export const GlobalStyles = createGlobalStyle`
         font: inherit;
     }
 
+    button {
+        cursor: pointer;
+    }
+
     body {
         font-family: Poppins;
         min-height: 100vh;
