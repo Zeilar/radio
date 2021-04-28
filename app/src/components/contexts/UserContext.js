@@ -11,7 +11,7 @@ export function UserContextProvider({ children }) {
             try {
                 const response = await fetch("http://localhost:3000/api/auth");
                 if (response.status === 200) {
-                    const data = response.json();
+                    const data = await response.json();
                     setUser(data);
                 }
             } catch (e) {
@@ -30,14 +30,14 @@ export function UserContextProvider({ children }) {
 
     async function loginOrRegister(url, data) {
         try {
-            const response = await fetch(`http://localhost:3000/api/auth/${url}`, {
+            const { status } = await fetch(`http://localhost:3000/api/auth/${url}`, {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
-            if (response.status !== 200) {
+            if (status !== 200) {
                 throw new Error();
             }
             delete data.password;
@@ -57,11 +57,9 @@ export function UserContextProvider({ children }) {
     }
 
     async function logout() {
-        if (!user) {
-            return;
-        }
-        const response = await fetch('/api/auth/logout');
-        if (response.code === 200) {
+        if (!user) return;
+        const { status } = await fetch('http://localhost:3000/api/auth/logout');
+        if (status === 200) {
             setUser(null);
         }
     }

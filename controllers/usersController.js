@@ -22,10 +22,10 @@ async function getUsers(req, res) {
             delete user.password;
             return user;
         });
-        return res.json(users);
+        res.json(users);
     } catch (e) {
         console.error(e);
-        return res.status(500).end();
+        res.status(500).end();
     }
 }
 
@@ -42,10 +42,10 @@ async function getUserById(req, res) {
         if (!user) {
             return res.status(404).end();
         }
-        return res.json(user);
+        res.json(user);
     } catch (e) {
         console.error(e);
-        return res.status(500).end();
+        res.status(500).end();
     }
 }
 

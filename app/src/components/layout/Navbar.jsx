@@ -8,7 +8,7 @@ import { UserContext } from '../contexts/UserContext';
 import { Login, Register } from '../views/modals';
 
 export default function Navbar() {
-    const { isLoggedIn } = useContext(UserContext);
+    const { isLoggedIn, logout } = useContext(UserContext);
 
     const [activeModal, setActiveModal] = useState();
 
@@ -47,8 +47,13 @@ export default function Navbar() {
                             </ModalNavitem>
                         </>
                     )}
+                    {isLoggedIn && (
+                        <Navitem>
+                            <ModalButton onClick={logout}>Logga out</ModalButton>
+                        </Navitem>
+                    )}
                     <Navitem>
-                        <Navlink to="/program">Program</Navlink>
+                        <Navlink to="/programs">Program</Navlink>
                     </Navitem>
                 </Row>
             </Nav>
