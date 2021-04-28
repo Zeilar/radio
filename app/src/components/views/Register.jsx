@@ -14,14 +14,21 @@ export default function Login({ visible, close }) {
     const container = useClickOutside(close);
     
     useEffect(() => {
-        const body = document.querySelector("body");
-        body.style.overflow = "hidden";
         return () => {
-            body.style.overflow = null;
+            document.querySelector("body").style.overflow = null;
         }
     }, []);
 
-    if (isLoggedIn || !visible) {
+    useEffect(() => {
+        const body = document.querySelector("body");
+        if (visible) {
+            body.style.overflow = "hidden";
+        } else {
+            body.style.overflow = null;
+        }
+    }, [visible]);
+
+    if (isLoggedIn) {
         return null;
     }
 
@@ -36,7 +43,7 @@ export default function Login({ visible, close }) {
     return (
         <Wrapper as="form" onSubmit={submit} visible={visible}>
             <Content ref={container}>
-                <Header>Registrera</Header>
+                <Header>Logga in</Header>
                 <InputRow>
                     <Label>Användarnamn</Label>
                     <Input value={username} onChange={e => setUsername(e.target.value)} />
@@ -55,8 +62,9 @@ const Content = styled(Col)`
     position: fixed;
     transform: translate(-50%, -50%);
     left: 50%;
-    top: 35%;
+    top: 30%;
     padding: 30px;
+    transition: top 0.35s, opacity 0.05s;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
     min-width: 500px;
     ${({ theme }) => css`
@@ -71,7 +79,24 @@ const Wrapper = styled(Col)`
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.65);
+    background: none;
+    transition: 0.25s;
+    opacity: 0;
+    pointer-events: none;
+    ${Content} {
+        pointer-events: none;
+    }
+    ${({ visible }) => visible && css`
+        background-color: rgba(0, 0, 0, 0.65);
+        display: block;
+        pointer-events: all;
+        opacity: 1;
+        ${Content} {
+            pointer-events: all;
+            opacity: 1;
+            top: 35%;
+        }
+    `}
 `;
 
 const Header = styled(H2)`
