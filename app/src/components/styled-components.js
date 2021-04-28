@@ -53,8 +53,13 @@ export const Button = styled.button(({ theme }) => css`
     padding: 12px 40px;
     font: bold 1.15rem Poppins;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+    transition: 0.25s;
+    &:not([disabled]):hover {
+        background-color: rgb(25, 25, 25);
+    }
     &[disabled] {
         cursor: default;
+        background-color: rgb(85, 85, 85);
     }
 `);
 

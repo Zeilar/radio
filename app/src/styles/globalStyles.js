@@ -22,6 +22,11 @@ export const GlobalStyles = createGlobalStyle`
         color: rgb(235, 235, 235);
     }
 
+    input,
+    textarea {
+        font: inherit;
+    }
+
     body {
         font-family: Poppins;
         min-height: 100vh;

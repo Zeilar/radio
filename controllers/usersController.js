@@ -25,14 +25,14 @@ async function getUsers(req, res) {
         return res.json(users);
     } catch (e) {
         console.error(e);
-        return res.sendStatus(500);
+        return res.status(500).end();
     }
 }
 
 async function getUserById(req, res) {
     const id = Number(req.params.id);
     if (!id) {
-        return res.sendStatus(400);
+        return res.status(400).end();
     }
     try {
         const user = await prisma.user.findUnique({
@@ -40,12 +40,12 @@ async function getUserById(req, res) {
             include: { recipes: true },
         });
         if (!user) {
-            return res.sendStatus(404);
+            return res.status(404).end();
         }
         return res.json(user);
     } catch (e) {
         console.error(e);
-        return res.sendStatus(500);
+        return res.status(500).end();
     }
 }
 
@@ -54,7 +54,7 @@ async function updateUser(req, res) {
     const { username, password } = req.body;
 
     if (!id || !username || !password) {
-        return res.sendStatus(400);
+        return res.status(400).end();
     }
     
     const { code } = await findOrFail(id);
@@ -67,17 +67,17 @@ async function updateUser(req, res) {
             where: { id },
             data: {},
         });
-        return res.sendStatus(200);
+        return res.status(200).end();
     } catch (e) {
         console.error(e);
-        return res.sendStatus(500);
+        return res.status(500).end();
     }
 }
 
 async function deleteUser(req, res) {
     const id = Number(req.params.id);
     if (!id) {
-        return res.sendStatus(400);
+        return res.status(400).end();
     }
 
     const { code } = await findOrFail(id);
@@ -91,10 +91,10 @@ async function deleteUser(req, res) {
             return res.sendStatus(404);
         }
         await prisma.user.delete({ where: { id } });
-        return res.sendStatus(200);
+        return res.status(200).end();
     } catch (e) {
         console.error(e);
-        return res.sendStatus(500);
+        return res.status(500).end();
     }
 }
 
