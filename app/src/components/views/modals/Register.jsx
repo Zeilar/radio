@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { UserContext } from '../../contexts/UserContext';
 import { Col, H2 } from '../../styled-components';
@@ -15,6 +15,8 @@ export default function Login({ visible, close, openModal }) {
     const [password, setPassword] = useState('');
 
     const container = useClickOutside(close, { condition: visible });
+
+    const input = useRef();
     
     useEffect(() => {
         return () => {
@@ -24,6 +26,7 @@ export default function Login({ visible, close, openModal }) {
 
     useEffect(() => {
         document.querySelector("body").overflow = visible ? "hidden" : null;
+        if (visible) input.current?.focus();
     }, [visible]);
 
     useEffect(() => {
@@ -62,7 +65,7 @@ export default function Login({ visible, close, openModal }) {
                 </RedirectWrapper>
                 <InputRow>
                     <Label>Användarnamn</Label>
-                    <Input value={username} onChange={e => setUsername(e.target.value)} />
+                    <Input value={username} onChange={e => setUsername(e.target.value)} ref={input} />
                 </InputRow>
                 <InputRow>
                     <Label>Lösenord</Label>

@@ -3,6 +3,8 @@ import ChannelThumb from '../layout/ChannelThumb';
 import { Button, Col, Container, fadeIn } from '../styled-components';
 import { Loader } from '../layout';
 import useSRInfiniteQuery from '../../hooks/useSRInfiniteQuery';
+import { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../contexts/UserContext';
 
 export default function Home() {
     const {
@@ -13,6 +15,27 @@ export default function Home() {
         hasNextPage,
         fetchNextPage
     } = useSRInfiniteQuery("channels", "http://api.sr.se/api/v2/channels", { size: 30 });
+
+    const { user } = useContext(UserContext);
+
+    const [likedChannels, setLikedChannels] = useState([]);
+
+    useEffect(() => {
+        if (!user || !user.channelLikes) {
+            return;
+        }
+        (async () => {
+            const likedChannels = await Promise.all(user.channelLikes.map(async like => {
+                const response = await fetch(`http://api.sr.se/api/v2/channels/${like}?format=json`);
+                const { channel } = await response.json();
+                return channel;
+            }));
+            console.log(likedChannels);
+            setLikedChannels(likedChannels);
+        })();
+    }, [user]);
+
+    console.log(likedChannels);
 
     return (
         <Wrapper>
