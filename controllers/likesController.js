@@ -1,14 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-async function getChannelLikes(req, res) {
-    
-}
-
-async function getProgramLikes(req, res) {
-    
-}
-
 async function likeChannel(req, res) {
     
 }
@@ -21,6 +13,9 @@ async function likeProgram(req, res) {
     const program_id = Number(req.params.id);
     if (!program_id) return status(400).end();
     try {
+        const program = await prisma.programLikes.findFirst({ where: { program_id } });
+        if (program) return res.status(400).end();
+
         await prisma.programLikes.create({
             data: {
                 program_id,
@@ -39,8 +34,6 @@ async function unlikeProgram(req, res) {
 }
 
 module.exports = {
-    getChannelLikes,
-    getProgramLikes,
     likeChannel,
     likeProgram,
     unlikeChannel,
