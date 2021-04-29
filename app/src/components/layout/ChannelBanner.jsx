@@ -77,6 +77,8 @@ const ChannelLink = styled(H4)`
     text-decoration: none;
     text-align: right;
     font-family: Poppins;
+    user-select: none;
+    transition: color 0.1s;
     ${({ color }) => css`
         &.active {
             color: #${color};

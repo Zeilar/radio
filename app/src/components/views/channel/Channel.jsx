@@ -33,7 +33,7 @@ export default function Channel({ match }) {
     return (
         <Wrapper>
             {sidebarVisible && (
-                <Sidebar as="aside">
+                <Sidebar as="aside" color={channel?.color}>
                     <Category 
                         onClick={() => setActiveCategory(null)} 
                         active={activeCategory == null} 
@@ -85,18 +85,32 @@ const Wrapper = styled(Container).attrs({ justify: "center", col: true })`
 `;
 
 const Sidebar = styled.aside`
+    ${fadeIn}
     display: grid;
-    grid-gap: 5px;
+    grid-gap: 8px;
     position: fixed;
+    max-height: 50vh;
+    overflow: auto;
+    padding-right: 5px;
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
     transform: translateX(calc(-100% - 15px));
-    ${({ theme }) => css`
+    ${({ theme, color }) => css`
         top: ${theme.navbarHeight + 30 + 100 + 15}px;
+        &::-webkit-scrollbar-thumb {
+            background-color: #${color};
+            border-radius: 20px;
+        }
     `}
 `;
 
 const Category = styled.div`
     cursor: pointer;
     padding: 10px;
+    transition: 0.05s;
+    user-select: none;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
     ${({ theme }) => css`
         background-color: rgb(${theme.color.bodyLight});
     `}

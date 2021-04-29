@@ -1,7 +1,8 @@
 import styled, { css } from 'styled-components';
-import { Col, H5 } from '../../styled-components';
+import { Col, fadeIn, H5 } from '../../styled-components';
 
 export const Programs = styled.div`
+    ${fadeIn}
     display: grid;
     grid-template-columns: repeat(${({ columns }) => columns}, 1fr);
     grid-gap: 15px;
