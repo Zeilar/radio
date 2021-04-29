@@ -2,30 +2,44 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 
+async function findUser(where, withPassword = false) {
+    try {
+        const user = await prisma.user.findFirst({
+            where,
+            include: {
+                programLikes: {
+                    select: {
+                        program_id: true,
+                    },
+                },
+                channelLikes: {
+                    select: {
+                        channel_id: true,
+                    },
+                },
+            },
+        });
+        if (!user) return null;
+        user.programLikes = user.programLikes.map(like => like.program_id);
+        user.channelLikes = user.channelLikes.map(like => like.channel_id);
+        if (!withPassword) {
+            delete user.password;
+        }
+        return user;
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
 async function authenticate(req, res) {
-    const id = Number(req.session.user?.id);
+    const id = Number(req.session.user);
     if (!id) {
         return res.status(401).end();
     }
-    const user = await prisma.user.findUnique({
-        where: { id },
-        include: {
-            programLikes: {
-                select: {
-                    program_id: true,
-                },
-            },
-            channelLikes: {
-                select: {
-                    channel_id: true,
-                },
-            },
-        },
-    });
+    const user = await findUser({ id });
     if (user) {
-        programLikes = user.programLikes.map(like => like.program_id);
-        channelLikes = user.channelLikes.map(like => like.channel_id);
-        res.json({ username: user.username, programLikes, channelLikes });
+        res.json(user);
     } else {
         res.status(401).end();
     }
@@ -53,14 +67,13 @@ async function register(req, res) {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const createdUser = await prisma.user.create({
+        const { id } = await prisma.user.create({
             data: {
                 username,
                 password: hashedPassword,
             },
         });
-        delete createdUser.password;
-        req.session.user = createdUser;
+        req.session.user = id;
         res.status(200).end();
     } catch (e) {
         console.error(e);
@@ -77,18 +90,18 @@ async function login(req, res) {
     if (!username || !password) {
         return res.status(400).end();
     }
-
-    const user = await prisma.user.findUnique({ where: { username } });
+    
+    const user = await findUser({ username }, true);
     if (!user) {
         return res.status(422).json({ message: "User does not exist" });
     }
-
+    
     const match = await bcrypt.compare(password, user.password);
 
     if (match) {
+        req.session.user = user.id;
         delete user.password;
-        req.session.user = user;
-        res.status(200).end();
+        res.json(user);
     } else {
         res.status(422).json({ message: "Incorrect password" });
     }
