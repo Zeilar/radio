@@ -23,8 +23,6 @@ export default function ChannelSchedule({ channel, formatForUrl }) {
         return dayjs(new Date(Number(date.match(/([0-9]+)/g)[0]))).format("HH:mm");
     }
 
-    console.log(programs?.pages[0]?.data?.schedule);
-
     return (
         <>
             {isLoading && <Loader />}
