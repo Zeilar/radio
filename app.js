@@ -3,9 +3,10 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
+const { loggedIn } = require("./middlewares/auth");
 
-const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const likeRoutes = require('./routes/likeRoutes');
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -21,10 +22,10 @@ app.use(session({
 }));
 
 // Controller routes
-app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/likes', loggedIn, likeRoutes);
 
 // Serve the frontend if nothing else to do
 app.use(express.static(path.join(__dirname, 'build-ui')));
 
-app.listen(PORT);
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

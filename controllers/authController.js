@@ -3,14 +3,29 @@ const prisma = new PrismaClient();
 const bcrypt = require('bcrypt');
 
 async function authenticate(req, res) {
-    const userSession = req.session.user;
-    if (!userSession) {
+    const id = Number(req.session.user?.id);
+    if (!id) {
         return res.status(401).end();
     }
-    const user = await prisma.user.findUnique({ where: { id: userSession.id } }); // include user likes
-    delete user.password;
+    const user = await prisma.user.findUnique({
+        where: { id },
+        include: {
+            programLikes: {
+                select: {
+                    program_id: true,
+                },
+            },
+            channelLikes: {
+                select: {
+                    channel_id: true,
+                },
+            },
+        },
+    });
     if (user) {
-        res.json(user);
+        programLikes = user.programLikes.map(like => like.program_id);
+        channelLikes = user.channelLikes.map(like => like.program_id);
+        res.json({ username: user.username, programLikes, channelLikes });
     } else {
         res.status(401).end();
     }

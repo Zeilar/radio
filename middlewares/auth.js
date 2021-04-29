@@ -1,11 +1,11 @@
-function authorize(req, res, next) {
+function loggedIn(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-        res.sendStatus(401);
+        res.status(401).end();
     }
 }
 
 module.exports = {
-    authorize,
+    loggedIn,
 };
