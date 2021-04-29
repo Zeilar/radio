@@ -30,18 +30,18 @@ export function UserContextProvider({ children }) {
 
     async function loginOrRegister(url, data) {
         try {
-            const { status } = await fetch(`http://localhost:3000/api/auth/${url}`, {
+            const response = await fetch(`http://localhost:3000/api/auth/${url}`, {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
-            if (status !== 200) {
+            if (response.status !== 200) {
                 throw new Error();
             }
-            delete data.password;
-            setUser(data);
+            const user = await response.json();
+            setUser(user);
             return true;
         } catch (e) {
             return false;
