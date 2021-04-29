@@ -51,5 +51,4 @@ const HeaderWrapper = styled(Row).attrs({ align: "center" })`
 
 const ChannelIcon = styled.img.attrs({ loading: "lazy" })`
     width: 60px;
-    margin-left: 5px;
 `;

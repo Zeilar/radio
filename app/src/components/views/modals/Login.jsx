@@ -129,6 +129,7 @@ const RedirectWrapper = styled.p`
 const RedirectLink = styled.span`
     text-decoration: underline;
     cursor: pointer;
+    user-select: none;
 `;
 
 const InputRow = styled(Col)`

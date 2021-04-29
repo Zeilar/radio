@@ -33,6 +33,12 @@ export default function Navbar() {
                     </Brandlink>
                 </Brand>
                 <Row as={Navlist}>
+                    <Navitem>
+                        <Navlink to="/tablåer">Mina tablåer</Navlink>
+                    </Navitem>
+                    <Navitem>
+                        <Navlink to="/programs">Program</Navlink>
+                    </Navitem>
                     {!loading && !isLoggedIn && (
                         <>
                             <ModalNavitem>
@@ -52,9 +58,6 @@ export default function Navbar() {
                             <ModalButton onClick={logout}>Logga out</ModalButton>
                         </Navitem>
                     )}
-                    <Navitem>
-                        <Navlink to="/programs">Program</Navlink>
-                    </Navitem>
                 </Row>
             </Nav>
         </Header>
