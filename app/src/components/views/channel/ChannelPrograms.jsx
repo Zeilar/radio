@@ -1,19 +1,35 @@
 import { NavLink } from 'react-router-dom';
 import { chunk } from '../../../helpers';
-import { mdiHeart, mdiHeartOutline } from '@mdi/js';
-import Icon from '@mdi/react';
 import * as Styles from './channel.styles';
+import { useSRInfiniteQuery } from '../../../hooks';
+import { Loader } from '../../layout';
+import { useEffect } from 'react';
 
-export default function ChannelPrograms({ channel, programs, formatForUrl }) {
+export default function ChannelPrograms({ channel, formatForUrl, activeCategory }) {
     const columns = 3;
+
+    const { data, isLoading, refetch, isFetching } = useSRInfiniteQuery(
+        `channel/${channel.id}/programs`,
+        "http://api.sr.se/api/v2/programs/index",
+        { channelid: channel.id, size: 30, programcategoryid: activeCategory },
+    );
+
+    useEffect(() => {
+        refetch();
+    }, [activeCategory]);
+
+
+    if (isLoading || isFetching) {
+        return <Loader />;
+    }
+
     return (
         <Styles.Programs columns={columns}>
-            {programs.map(page => (
+            {data.pages.map(page => (
                 chunk(page.data.programs, columns).map((column, i) => (
                     <Styles.ProgramColumn key={i}>
                         {column.map(program => (
                             <Styles.Program color={channel.color} key={program.id} as="article">
-                                <Icon path={mdiHeart} size={1} style={{ position: "absolute", right: 10, top: 10, color: "red" }} />
                                 <Styles.ProgramImage src={program.programimagetemplatewide} />
                                 <Styles.ProgramCard>
                                     <Styles.ProgramName as={NavLink} to={`/program/${program.id}/${formatForUrl(program?.name)}`}>

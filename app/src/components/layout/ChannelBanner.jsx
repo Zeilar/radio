@@ -3,7 +3,11 @@ import styled, { css } from 'styled-components';
 import { Col, Row, H3, H5, H4 } from '../styled-components';
 import PlayerButton from './PlayerButton';
 
-export default function ChannelBanner({ channel = {}, channelUrl }) {
+export default function ChannelBanner({ channel, channelUrl }) {
+    if (!channel) {
+        return null;
+    }
+
     return (
         <ChannelWrapper>
             <ChannelIcon src={channel.image} />

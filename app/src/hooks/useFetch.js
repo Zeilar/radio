@@ -4,6 +4,7 @@ export default function useFetch(url, args = {}) {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
     const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     function parseQueryParams(params = {}) {
         if (Object.keys(params).length <= 0) {
@@ -30,10 +31,11 @@ export default function useFetch(url, args = {}) {
                 console.error(e.message);
                 setError(e.message);
             } finally {
+                setSuccess(true);
                 setLoading(false);
             }
         })();
     }, [url]);
 
-    return { loading, data, error, success: !Boolean(error) };
+    return { loading, data, error, success };
 }
