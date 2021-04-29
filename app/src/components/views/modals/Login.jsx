@@ -14,7 +14,7 @@ export default function Login({ visible, close, openModal }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const container = useClickOutside(close, visible);
+    const container = useClickOutside(close, { condition: visible });
     
     useEffect(() => {
         return () => {

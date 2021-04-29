@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react';
 
-export default function useClickOutside(callback, condition = true, event = "mousedown") {
+export default function useClickOutside(callback, args = {}) {
     const ref = useRef();
 
     useEffect(() => {
+        const event = args.event ?? "mousedown";
         function clickHandler(e) {
-            if (ref.current && condition && !ref.current.contains(e.target)) {
+            if (ref.current && args.condition && !ref.current.contains(e.target)) {
                 callback();
             }
         }
@@ -13,7 +14,7 @@ export default function useClickOutside(callback, condition = true, event = "mou
         return () => {
             document.removeEventListener(event, clickHandler);
         }
-    }, [callback, event, condition]);
+    }, [callback, args.condition, args.event]);
 
     return ref;
 }
