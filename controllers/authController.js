@@ -24,7 +24,7 @@ async function authenticate(req, res) {
     });
     if (user) {
         programLikes = user.programLikes.map(like => like.program_id);
-        channelLikes = user.channelLikes.map(like => like.program_id);
+        channelLikes = user.channelLikes.map(like => like.channel_id);
         res.json({ username: user.username, programLikes, channelLikes });
     } else {
         res.status(401).end();

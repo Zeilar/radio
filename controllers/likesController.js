@@ -1,12 +1,12 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-async function likeChannel(req, res) {
-    
+function likeChannel(req, res) {
+    like(req, res, "channel");
 }
 
-async function unlikeChannel(req, res) {
-    
+function unlikeChannel(req, res) {
+    unlike(req, res, "channel");
 }
 
 function likeProgram(req, res) {
@@ -21,11 +21,10 @@ async function like(req, res, resource) {
     resource_id = Number(req.params.id);
     if (!resource_id) return status(400).end();
     try {
-        const data = await prisma.programLikes.findFirst({ where: { [`${resource}_id`]: resource_id } });
+        const data = await prisma[`${resource}Likes`].findFirst({ where: { [`${resource}_id`]: resource_id } });
         if (data) return res.status(400).end();
 
-
-        await prisma.programLikes.create({
+        await prisma[`${resource}Likes`].create({
             data: {
                 [`${resource}_id`]: resource_id,
                 user_id: req.session.user.id,
@@ -42,13 +41,13 @@ async function unlike(req, res, resource) {
     resource_id = Number(req.params.id);
     if (!resource_id) return status(400).end();
     try {
-        const data = await prisma.programLikes.findFirst({ where: { [`${resource}_id`]: resource_id } });
+        const data = await prisma[`${resource}Likes`].findFirst({
+            where: { [`${resource}_id`]: resource_id },
+        });
         if (!data) return res.status(400).end();
 
-        await prisma.programLikes.delete({
-            where: {
-                id: data.id,
-            },
+        await prisma[`${resource}Likes`].delete({
+            where: { id: data.id },
         });
         res.status(200).end();
     } catch (e) {
