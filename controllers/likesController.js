@@ -9,16 +9,25 @@ async function unlikeChannel(req, res) {
     
 }
 
-async function likeProgram(req, res) {
-    const program_id = Number(req.params.id);
-    if (!program_id) return status(400).end();
+function likeProgram(req, res) {
+    like(req, res, "program");
+}
+
+function unlikeProgram(req, res) {
+    unlike(req, res, "program");
+}
+
+async function like(req, res, resource) {
+    resource_id = Number(req.params.id);
+    if (!resource_id) return status(400).end();
     try {
-        const program = await prisma.programLikes.findFirst({ where: { program_id } });
-        if (program) return res.status(400).end();
+        const data = await prisma.programLikes.findFirst({ where: { [`${resource}_id`]: resource_id } });
+        if (data) return res.status(400).end();
+
 
         await prisma.programLikes.create({
             data: {
-                program_id,
+                [`${resource}_id`]: resource_id,
                 user_id: req.session.user.id,
             },
         });
@@ -29,8 +38,23 @@ async function likeProgram(req, res) {
     }
 }
 
-async function unlikeProgram(req, res) {
-    
+async function unlike(req, res, resource) {
+    resource_id = Number(req.params.id);
+    if (!resource_id) return status(400).end();
+    try {
+        const data = await prisma.programLikes.findFirst({ where: { [`${resource}_id`]: resource_id } });
+        if (!data) return res.status(400).end();
+
+        await prisma.programLikes.delete({
+            where: {
+                id: data.id,
+            },
+        });
+        res.status(200).end();
+    } catch (e) {
+        console.error(e);
+        res.status(500).end();
+    }
 }
 
 module.exports = {
