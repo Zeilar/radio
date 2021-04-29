@@ -34,7 +34,7 @@ export default function useSRInfiniteQuery(name = "", url = "", queryParams = {}
 
     useEffect(() => {
         function attemptToLoadMore() {
-            if (!query.hasNextPage || query.isFetchingNextPage) {
+            if (!query.hasNextPage || query.isFetchingNextPage || query.isFetching) {
                 return;
             }
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mdiRadio } from '@mdi/js';
 import Icon from '@mdi/react';
-import { Col, H3 } from '../styled-components';
+import { Col, fadeIn, H3 } from '../styled-components';
 
 export default function Loader({ loading, message = null }) {
     if (loading === false) {
@@ -22,6 +22,7 @@ export default function Loader({ loading, message = null }) {
 }
 
 const Wrapper = styled(Col)`
+    ${fadeIn}
     color: rgb(${({ theme }) => theme.color.textPrimary});
     padding: 5px;
     margin: 30px;

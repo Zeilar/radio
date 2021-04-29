@@ -29,7 +29,8 @@ export default function Channel({ match }) {
         return string.replace(" ", "-");
     }
     
-    const channel = channelQuery.data?.channel
+    const channel = channelQuery.data?.channel;
+
     return (
         <Wrapper>
             {sidebarVisible && (
