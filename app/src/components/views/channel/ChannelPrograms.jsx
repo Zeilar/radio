@@ -5,7 +5,7 @@ import { useSRInfiniteQuery } from '../../../hooks';
 import { Loader } from '../../layout';
 import { useEffect } from 'react';
 
-export default function ChannelPrograms({ channel, formatForUrl, activeCategory }) {
+export default function ChannelPrograms({ channel, formatForUrl, activeCategory, setSidebarVisible }) {
     const columns = 3;
 
     const { data, isLoading, refetch, isFetching } = useSRInfiniteQuery(
@@ -18,6 +18,12 @@ export default function ChannelPrograms({ channel, formatForUrl, activeCategory 
         refetch();
     }, [activeCategory]);
 
+    useEffect(() => {
+        setSidebarVisible(true);
+        return () => {
+            setSidebarVisible(false);
+        }
+    }, [setSidebarVisible]);
 
     if (isLoading || isFetching) {
         return <Loader />;

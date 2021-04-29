@@ -24,42 +24,55 @@ export default function Channel({ match }) {
         },
     });
 
-    const channel = channelQuery.data?.channel;
-    
     function formatForUrl(string) {
         if (!string) return "";
         return string.replace(" ", "-");
     }
-
+    
+    const channel = channelQuery.data?.channel
     return (
         <Wrapper>
-            <Sidebar as="aside">
-                <Category 
-                    onClick={() => setActiveCategory(null)} 
-                    active={activeCategory == null} 
-                    color={channel?.color}
-                >
-                    Alla
-                </Category>
-                {categoriesQuery.success && categoriesQuery.data.programcategories.map(category => (
-                    <Category
-                        key={category.id}
-                        onClick={() => setActiveCategory(category.id)}
-                        active={activeCategory === category.id}
+            {sidebarVisible && (
+                <Sidebar as="aside">
+                    <Category 
+                        onClick={() => setActiveCategory(null)} 
+                        active={activeCategory == null} 
                         color={channel?.color}
                     >
-                        {category.name}
+                        Alla
                     </Category>
-                ))}
-            </Sidebar>
+                    {categoriesQuery.success && categoriesQuery.data.programcategories.map(category => (
+                        <Category
+                            key={category.id}
+                            onClick={() => setActiveCategory(category.id)}
+                            active={activeCategory === category.id}
+                            color={channel?.color}
+                        >
+                            {category.name}
+                        </Category>
+                    ))}
+                </Sidebar>
+            )}
             <ChannelBanner channelUrl={match.url} channel={channel} />
             {channelQuery.loading && <Loader />}
             <Switch>
                 <Route path={`${match.url}/tabla`} exact>
-                    {channel && <ChannelSchedule formatForUrl={formatForUrl} channel={channel} />}
+                    {channel && (
+                        <ChannelSchedule
+                            formatForUrl={formatForUrl}
+                            channel={channel}
+                        />
+                    )}
                 </Route>
                 <Route>
-                    {channel && <ChannelPrograms formatForUrl={formatForUrl} channel={channel} activeCategory={activeCategory} />}
+                    {channel && (
+                        <ChannelPrograms
+                            formatForUrl={formatForUrl}
+                            channel={channel}
+                            activeCategory={activeCategory}
+                            setSidebarVisible={setSidebarVisible}
+                        />
+                    )}
                 </Route>
             </Switch>
         </Wrapper>
