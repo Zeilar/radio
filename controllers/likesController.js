@@ -27,7 +27,7 @@ async function like(req, res, resource) {
         await prisma[`${resource}Likes`].create({
             data: {
                 [`${resource}_id`]: resource_id,
-                user_id: req.session.id,
+                user_id: req.session.user,
             },
         });
         res.status(200).end();
