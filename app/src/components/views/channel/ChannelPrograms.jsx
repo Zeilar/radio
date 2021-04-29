@@ -4,7 +4,6 @@ import { useSRInfiniteQuery } from '../../../hooks';
 import { Loader } from '../../layout';
 import { useEffect } from 'react';
 import { H3 } from '../../styled-components';
-import _ from 'lodash';
 
 export default function ChannelPrograms({ channel, formatForUrl, activeCategory, setSidebarVisible }) {
     const columns = 3;
@@ -36,21 +35,17 @@ export default function ChannelPrograms({ channel, formatForUrl, activeCategory,
         <Styles.Programs columns={columns}>
             {noResults && <H3>Inga resultat</H3>}
             {isSuccess && data.pages.map(page => (
-                _.chunk(page.data.programs, columns).map((column, i) => (
-                    <Styles.ProgramColumn key={i}>
-                        {column.map(program => (
-                            <Styles.Program color={channel.color} key={program.id} as="article">
-                                <Styles.ProgramImage src={program.programimagetemplatewide} />
-                                <Styles.ProgramCard>
-                                    <Styles.ProgramName as={NavLink} to={`/program/${program.id}/${formatForUrl(program?.name)}`}>
-                                        {program.name}
-                                    </Styles.ProgramName>
-                                    <Styles.ProgramInfo>{program.broadcastinfo}</Styles.ProgramInfo>
-                                    <Styles.ProgramDescription>{program.description}</Styles.ProgramDescription>
-                                </Styles.ProgramCard>
-                            </Styles.Program>
-                        ))}
-                    </Styles.ProgramColumn>
+                page.data.programs.map(program => (
+                    <Styles.Program color={channel.color} key={program.id} as="article">
+                        <Styles.ProgramImage src={program.programimagetemplatewide} />
+                        <Styles.ProgramCard>
+                            <Styles.ProgramName as={NavLink} to={`/program/${program.id}/${formatForUrl(program?.name)}`}>
+                                {program.name}
+                            </Styles.ProgramName>
+                            <Styles.ProgramInfo>{program.broadcastinfo}</Styles.ProgramInfo>
+                            <Styles.ProgramDescription>{program.description}</Styles.ProgramDescription>
+                        </Styles.ProgramCard>
+                    </Styles.Program>
                 ))
             ))}
         </Styles.Programs>
