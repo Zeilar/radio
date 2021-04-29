@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { chunk } from '../../../helpers';
-import { mdiHeart } from '@mdi/js';
+import { mdiHeart, mdiHeartOutline } from '@mdi/js';
 import Icon from '@mdi/react';
 import * as Styles from './channel.styles';
 

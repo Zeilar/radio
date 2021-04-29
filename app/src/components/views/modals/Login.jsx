@@ -26,6 +26,13 @@ export default function Login({ visible, close, openModal }) {
         document.querySelector("body").overflow = visible ? "hidden" : null;
     }, [visible]);
 
+    useEffect(() => {
+        if (isLoggedIn) {
+            setUsername('');
+            setPassword('');
+        }
+    }, [isLoggedIn]);
+
     if (isLoggedIn) {
         return null;
     }

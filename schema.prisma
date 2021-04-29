@@ -11,4 +11,20 @@ model User {
   id       Int    @id @default(autoincrement())
   username String @unique
   password String
+  programLikes ProgramLikes[]
+  channelLikes ChannelLikes[]
+}
+
+model ProgramLikes {
+  id Int @id @default(autoincrement())
+  program_id Int
+  user User? @relation(fields: [user_id], references: [id])
+  user_id Int?
+}
+
+model ChannelLikes {
+  id Int @id @default(autoincrement())
+  channel_id Int
+  user User? @relation(fields: [user_id], references: [id])
+  user_id Int?
 }
