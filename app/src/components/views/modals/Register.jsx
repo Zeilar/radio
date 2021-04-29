@@ -65,11 +65,11 @@ export default function Login({ visible, close, openModal }) {
                 </RedirectWrapper>
                 <InputRow>
                     <Label>Användarnamn</Label>
-                    <Input value={username} onChange={e => setUsername(e.target.value)} ref={input} />
+                    <Input value={username} onChange={e => setUsername(e.target.value)} ref={input} type="text" />
                 </InputRow>
                 <InputRow>
                     <Label>Lösenord</Label>
-                    <Input value={password} onChange={e => setPassword(e.target.value)} />
+                    <Input value={password} onChange={e => setPassword(e.target.value)} type="password" />
                 </InputRow>
                 <LoadingButton loading={loading}>
                     Skapa konto
@@ -142,7 +142,7 @@ const Label = styled.label`
     cursor: text;
 `;
 
-const Input = styled.input.attrs({ type: "text" })`
+const Input = styled.input`
     border: 0;
     border-bottom: 1px solid rgb(${({ theme }) => theme.color.brand});
     outline: 0;
