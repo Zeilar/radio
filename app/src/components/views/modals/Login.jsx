@@ -17,6 +17,10 @@ export default function Login({ visible, close, openModal }) {
     const container = useClickOutside(close, { condition: visible });
 
     const input = useRef();
+    
+    useEffect(() => {
+        if (visible) input.current?.focus();
+    }, [visible]);
 
     useEffect(() => {
         if (isLoggedIn) {

@@ -25,6 +25,10 @@ export default function Login({ visible, close, openModal }) {
         }
     }, [isLoggedIn]);
 
+    useEffect(() => {
+        if (visible) input.current?.focus();
+    }, [visible]);
+
     if (isLoggedIn) {
         return null;
     }
