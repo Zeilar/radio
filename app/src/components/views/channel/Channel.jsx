@@ -11,7 +11,7 @@ export default function Channel({ match }) {
     const { id } = match.params;
 
     const [activeCategory, setActiveCategory] = useState(null);
-    const [sidebarVisible, setSidebarVisible] = useState(true);
+    const [sidebarVisible, setSidebarVisible] = useState(false);
 
     const channelQuery = useFetch(`http://api.sr.se/api/v2/channels/${id}`, {
         params: { format: "json" },
