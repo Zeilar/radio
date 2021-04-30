@@ -92,7 +92,7 @@ const Sidebar = styled.aside`
     position: fixed;
     max-height: 50vh;
     overflow: auto;
-    padding: 5px;
+    padding: 0 5px;
     &::-webkit-scrollbar {
         width: 10px;
     }
@@ -108,7 +108,7 @@ const Sidebar = styled.aside`
 
 const Category = styled.div`
     cursor: pointer;
-    padding: 10px;
+    padding: 15px 20px;
     transition: 0.05s;
     user-select: none;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
