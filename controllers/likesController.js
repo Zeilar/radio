@@ -21,7 +21,12 @@ async function like(req, res, resource) {
     resource_id = Number(req.params.id);
     if (!resource_id) return status(400).end();
     try {
-        const data = await prisma[`${resource}Likes`].findFirst({ where: { [`${resource}_id`]: resource_id } });
+        const data = await prisma[`${resource}Likes`].findFirst({
+            where: {
+                [`${resource}_id`]: resource_id,
+                user_id: req.session.user,
+            },
+        });
         if (data) return res.status(400).end();
 
         await prisma[`${resource}Likes`].create({
@@ -42,7 +47,10 @@ async function unlike(req, res, resource) {
     if (!resource_id) return status(400).end();
     try {
         const data = await prisma[`${resource}Likes`].findFirst({
-            where: { [`${resource}_id`]: resource_id },
+            where: {
+                [`${resource}_id`]: resource_id,
+                user_id: req.session.user,
+            },
         });
         if (!data) return res.status(400).end();
 
