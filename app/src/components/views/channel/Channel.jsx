@@ -88,11 +88,11 @@ const Wrapper = styled(Container).attrs({ justify: "center", col: true })`
 const Sidebar = styled.aside`
     ${fadeIn}
     display: grid;
-    grid-gap: 8px;
+    grid-gap: 5px;
     position: fixed;
     max-height: 50vh;
     overflow: auto;
-    padding-right: 5px;
+    padding: 5px;
     &::-webkit-scrollbar {
         width: 10px;
     }
@@ -111,12 +111,14 @@ const Category = styled.div`
     padding: 10px;
     transition: 0.05s;
     user-select: none;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
     ${({ theme }) => css`
         background-color: rgb(${theme.color.bodyLight});
+        border: 1px solid rgb(${theme.color.border});
     `}
     ${({ active, color }) => active && css`
         background-color: #${color};
+        border-color: transparent;
         color: white;
     `}
 `;

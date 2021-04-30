@@ -9,7 +9,7 @@ export default function ChannelPrograms({ channel, formatForUrl, activeCategory,
     const columns = 3;
 
     const { data, isLoading, refetch, isFetching } = useSRInfiniteQuery(
-        `channel/${channel.id}/programs`,
+        `channel/${channel.id}/programs/${activeCategory}`,
         "http://api.sr.se/api/v2/programs/index",
         { channelid: channel.id, size: 30, programcategoryid: activeCategory },
     );
