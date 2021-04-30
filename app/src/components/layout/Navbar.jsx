@@ -39,24 +39,25 @@ export default function Navbar() {
                     </Brandlink>
                 </Brand>
                 <Row as={Navlist}>
-                    {!loading && !isLoggedIn && (
-                        <>
-                            <ModalNavitem>
-                                <ModalButton onClick={() => openModal("login")}>
-                                    Logga in
-                                </ModalButton>
-                            </ModalNavitem>
-                            <ModalNavitem>
-                                <ModalButton onClick={() => openModal("register")}>
-                                    Registrera
-                                </ModalButton>
-                            </ModalNavitem>
-                        </>
-                    )}
-                    {!loading && isLoggedIn && (
-                        <Navitem>
-                            <ModalButton onClick={logout}>Logga out</ModalButton>
-                        </Navitem>
+                    {!loading && (
+                        isLoggedIn ? (
+                            <Navitem>
+                                <ModalButton onClick={logout}>Logga out</ModalButton>
+                            </Navitem>
+                        ) : (
+                            <>
+                                <Navitem>
+                                    <ModalButton onClick={() => openModal("login")}>
+                                        Logga in
+                                    </ModalButton>
+                                </Navitem>
+                                <Navitem>
+                                    <ModalButton onClick={() => openModal("register")}>
+                                        Registrera
+                                    </ModalButton>
+                                </Navitem>
+                            </>
+                        )
                     )}
                 </Row>
             </Nav>
@@ -103,10 +104,6 @@ const ModalsWrapper = styled.div`
     ${({ visible }) => visible && css`
         background-color: rgba(0, 0, 0, 0.65);
     `}
-`;
-
-const ModalNavitem = styled(Navitem)`
-    
 `;
 
 const Brand = styled.span.attrs({ align: "center" })`
