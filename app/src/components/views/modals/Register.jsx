@@ -17,17 +17,6 @@ export default function Login({ visible, close, openModal }) {
     const container = useClickOutside(close, { condition: visible });
 
     const input = useRef();
-    
-    useEffect(() => {
-        return () => {
-            document.querySelector("body").style.overflow = null;
-        }
-    }, []);
-
-    useEffect(() => {
-        document.querySelector("body").overflow = visible ? "hidden" : null;
-        if (visible) input.current?.focus();
-    }, [visible]);
 
     useEffect(() => {
         if (isLoggedIn) {

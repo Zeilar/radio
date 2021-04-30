@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { Row, flexbox, Container } from '../styled-components';
 import { mdiRadio } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { Login, Register } from '../views/modals';
 
@@ -19,6 +19,10 @@ export default function Navbar() {
     function openModal(modal) {
         setActiveModal(modal);
     }
+
+    useEffect(() => {
+        document.querySelector("body").style.overflow = activeModal ? "hidden" : null;
+    }, [activeModal]);
 
     return (
         <Header as="header">
