@@ -14,6 +14,10 @@ export const Content = styled(Col)`
     min-width: 500px;
     ${({ theme }) => css`
         background-color: rgb(${theme.color.bodyLight});
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            min-width: unset;
+            width: calc(100% - 30px);
+        }
     `}
 `;
 
