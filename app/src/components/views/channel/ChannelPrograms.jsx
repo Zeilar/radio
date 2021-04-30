@@ -8,10 +8,10 @@ import { H3 } from '../../styled-components';
 export default function ChannelPrograms({ channel, formatForUrl, activeCategory, setSidebarVisible }) {
     const columns = 3;
 
-    const { data, isLoading, refetch, isFetching, isSuccess } = useSRInfiniteQuery(
+    const { data, isLoading, refetch, isFetching } = useSRInfiniteQuery(
         `channel/${channel.id}/programs`,
         "http://api.sr.se/api/v2/programs/index",
-        { channelid: channel.id, size: 30, programcategoryid: activeCategory },
+        { channelid: channel.id, size: 30 },
     );
 
     useEffect(() => {
@@ -25,29 +25,32 @@ export default function ChannelPrograms({ channel, formatForUrl, activeCategory,
         }
     }, [setSidebarVisible]);
 
-    if (isLoading || isFetching) {
+    if (isLoading) {
         return <Loader />;
     }
 
-    const noResults = !isFetching && !isLoading && data.pages[0].data.programs.length === 0;
+    const noResults = data.pages[0].data.programs.length === 0;
 
     return (
-        <Styles.Programs columns={columns}>
-            {noResults && <H3>Inga resultat</H3>}
-            {isSuccess && data.pages.map(page => (
-                page.data.programs.map(program => (
-                    <Styles.Program color={channel.color} key={program.id} as="article">
-                        <Styles.ProgramImage src={program.programimagetemplatewide} />
-                        <Styles.ProgramCard>
-                            <Styles.ProgramName as={NavLink} to={`/program/${program.id}/${formatForUrl(program?.name)}`}>
-                                {program.name}
-                            </Styles.ProgramName>
-                            <Styles.ProgramInfo>{program.broadcastinfo}</Styles.ProgramInfo>
-                            <Styles.ProgramDescription>{program.description}</Styles.ProgramDescription>
-                        </Styles.ProgramCard>
-                    </Styles.Program>
-                ))
-            ))}
-        </Styles.Programs>
+        <>
+            <Styles.Programs columns={columns}>
+                {noResults && <H3>Inga resultat</H3>}
+                {data.pages.map(page => (
+                    page.data.programs.map(program => (
+                        <Styles.Program color={channel.color} key={program.id} as="article">
+                            <Styles.ProgramImage src={program.programimagetemplatewide} />
+                            <Styles.ProgramCard>
+                                <Styles.ProgramName as={NavLink} to={`/program/${program.id}/${formatForUrl(program?.name)}`}>
+                                    {program.name}
+                                </Styles.ProgramName>
+                                <Styles.ProgramInfo>{program.broadcastinfo}</Styles.ProgramInfo>
+                                <Styles.ProgramDescription>{program.description}</Styles.ProgramDescription>
+                            </Styles.ProgramCard>
+                        </Styles.Program>
+                    ))
+                ))}
+            </Styles.Programs>
+            {isFetching && <Loader />}
+        </>
     );
 }
