@@ -11,7 +11,7 @@ export default function ChannelPrograms({ channel, formatForUrl, activeCategory,
     const { data, isLoading, refetch, isFetching } = useSRInfiniteQuery(
         `channel/${channel.id}/programs`,
         "http://api.sr.se/api/v2/programs/index",
-        { channelid: channel.id, size: 30 },
+        { channelid: channel.id, size: 30, programcategoryid: activeCategory },
     );
 
     useEffect(() => {
