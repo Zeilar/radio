@@ -23,9 +23,9 @@ export function UserContextProvider({ children }) {
         })();
     }, []);
 
-    function updateUser(user) {
-        if (!user) return;
-        setUser(p => ({ ...p, user }));
+    function updateUser(data) {
+        if (!data || !user) return;
+        setUser(p => ({ ...p, ...data }));
     }
 
     async function loginOrRegister(url, data) {
@@ -64,6 +64,33 @@ export function UserContextProvider({ children }) {
         }
     }
 
+    async function likeOrUnlikeChannel(id, method) {
+        if (!id) return false;
+        const response = await fetch(`http://localhost:3000/api/like/channel/${id}`, { method });
+        if (response.status === 200) {
+            if (method === "POST") {
+                updateUser({ channelLikes: [ ...user.channelLikes, id ] })
+            } else if (method === "DELETE") {
+                updateUser({ channelLikes: user.channelLikes.filter(channel => channel !== id) })
+            }
+            return true;
+        }
+        return false;
+    }
+
+    async function likeChannel(id) {
+        likeOrUnlikeChannel(id, "POST");
+    }
+    
+    async function unlikeChannel(id) {
+        likeOrUnlikeChannel(id, "DELETE");
+    }
+
+    function hasLikedChannel(id) {
+        if (!user) return false;
+        return user.channelLikes.includes(id);
+    }
+
     const values = {
         isLoggedIn: Boolean(user),
         user,
@@ -72,6 +99,9 @@ export function UserContextProvider({ children }) {
         logout,
         login,
         register,
+        likeChannel,
+        unlikeChannel,
+        hasLikedChannel,
     };
 
     return (

@@ -1,11 +1,29 @@
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { UserContext } from '../contexts/UserContext';
 import { Col, Row, H3, H5, H4 } from '../styled-components';
 import PlayerButton from './PlayerButton';
+import { mdiHeart, mdiHeartOutline } from '@mdi/js';
+import Icon from '@mdi/react';
 
 export default function ChannelBanner({ channel, channelUrl }) {
+    const { isLoggedIn, hasLikedChannel, likeChannel, unlikeChannel } = useContext(UserContext);
+
+    // console.log('has liked', channel?.id, hasLikedChannel(channel?.id));
+
     if (!channel) {
         return null;
+    }
+
+    function renderLikeToggler() {
+        if (!isLoggedIn || !channel) {
+            return null;
+        }
+        if (!hasLikedChannel(channel.id)) {
+            return <LikeToggler onClick={() => likeChannel(channel.id)} path={mdiHeartOutline} />
+        }
+        return <LikeToggler onClick={() => unlikeChannel(channel.id)} path={mdiHeart} />
     }
 
     return (
@@ -17,11 +35,14 @@ export default function ChannelBanner({ channel, channelUrl }) {
                     <ChannelType>{channel.channeltype}</ChannelType>
                 </ChannelMeta>
                 <ChannelNav>
-                    <PlayerButton color={channel.color} args={{
-                        src: channel.liveaudio.url,
-                        name: channel.name,
-                        description: channel.tagline,
-                    }} />
+                    <Buttons>
+                        {renderLikeToggler()}
+                        <PlayerButton style={{ margin: 0 }} color={channel.color} args={{
+                            src: channel.liveaudio.url,
+                            name: channel.name,
+                            description: channel.tagline,
+                        }} />
+                    </Buttons>
                     <ChannelLinks>
                         <ChannelLink as={NavLink} to={`${channelUrl}/tabla`} color={channel.color} exact>
                             Tablå
@@ -85,4 +106,15 @@ const ChannelLink = styled(H4)`
             border-bottom: 3px solid #${color};
         }
     `}
+`;
+
+const Buttons = styled(Row).attrs({ justify: "flex-end", align: "center" })`
+    
+`;
+
+const LikeToggler = styled(Icon)`
+    width: 1.75rem;
+    height: 1.75rem;
+    color: red;
+    cursor: pointer;
 `;
