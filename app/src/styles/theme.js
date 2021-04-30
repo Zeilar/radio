@@ -14,4 +14,9 @@ export const theme = {
     },
     borderRadius: 3,
     navbarHeight: 60,
+    breakpoints: {
+        desktop: 1600,
+        tablet: 1200,
+        phone: 768,
+    },
 };

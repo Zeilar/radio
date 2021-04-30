@@ -5,8 +5,6 @@ import { NavLink } from 'react-router-dom';
 import * as Styles from './channel.styles';
 
 export default function ChannelSchedule({ channel, formatForUrl }) {
-    const columns = 3;
-
     const { data, isSuccess, isLoading } = useSRInfiniteQuery(
         `channel/${channel.id}/tabla`,
         "http://api.sr.se/api/v2/scheduledepisodes",
@@ -25,7 +23,7 @@ export default function ChannelSchedule({ channel, formatForUrl }) {
     }
 
     return (
-        <Styles.Programs columns={columns}>
+        <Styles.Programs>
             {isSuccess && data.pages.map(page => (
                 page.data.schedule.map((program, j) => (
                     <Styles.Program color={channel.color} key={`${program.program.id}-${j}`} as="article">

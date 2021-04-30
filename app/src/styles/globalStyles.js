@@ -34,5 +34,7 @@ export const GlobalStyles = createGlobalStyle`
     body {
         font-family: Poppins;
         min-height: 100vh;
+        background-color: rgb(245, 245, 245);
+        overflow-x: hidden;
     }
 `;

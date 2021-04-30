@@ -6,8 +6,6 @@ import { useEffect } from 'react';
 import { H3 } from '../../styled-components';
 
 export default function ChannelPrograms({ channel, formatForUrl, activeCategory, setSidebarVisible }) {
-    const columns = 3;
-
     const { data, isLoading, refetch, isFetching } = useSRInfiniteQuery(
         `channel/${channel.id}/programs/${activeCategory}`,
         "http://api.sr.se/api/v2/programs/index",
@@ -33,7 +31,7 @@ export default function ChannelPrograms({ channel, formatForUrl, activeCategory,
 
     return (
         <>
-            <Styles.Programs columns={columns}>
+            <Styles.Programs>
                 {noResults && <H3>Inga resultat</H3>}
                 {data.pages.map(page => (
                     page.data.programs.map(program => (

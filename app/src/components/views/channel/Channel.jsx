@@ -33,6 +33,7 @@ export default function Channel({ match }) {
 
     return (
         <Wrapper>
+            <ChannelBanner channelUrl={match.url} channel={channel} />
             {sidebarVisible && (
                 <Sidebar as="aside" color={channel?.color}>
                     <Category 
@@ -54,7 +55,6 @@ export default function Channel({ match }) {
                     ))}
                 </Sidebar>
             )}
-            <ChannelBanner channelUrl={match.url} channel={channel} />
             {channelQuery.loading && <Loader />}
             <Switch>
                 <Route path={`${match.url}/tabla`} exact>
@@ -87,21 +87,32 @@ const Wrapper = styled(Container).attrs({ justify: "center", col: true })`
 
 const Sidebar = styled.aside`
     ${fadeIn}
-    display: grid;
-    grid-gap: 5px;
-    position: fixed;
-    max-height: 50vh;
     overflow: auto;
-    padding: 0 5px;
+    position: unset;
+    display: block;
+    transform: none;
+    max-height: unset;
+    display: flex;
+    padding: 10px 0;
+    margin-top: 15px;
     &::-webkit-scrollbar {
-        width: 10px;
+        width: 6px;
+        height: 4px;
     }
-    transform: translateX(calc(-100% - 15px));
     ${({ theme, color }) => css`
-        top: ${theme.navbarHeight + 30 + 100 + 15}px;
-        &::-webkit-scrollbar-thumb {
-            background-color: #${color};
-            border-radius: 20px;
+    top: ${theme.navbarHeight + 30 + 100 + 15}px;
+    &::-webkit-scrollbar-thumb {
+        background-color: #${color};
+        border-radius: 20px;
+    }
+    @media (min-width: ${theme.breakpoints.desktop}px) {
+            transform: translateX(calc(-100% - 15px));
+            display: grid;
+            position: fixed;
+            max-height: 50vh;
+            grid-gap: 5px;
+            padding: 0 5px;
+            margin: 0;
         }
     `}
 `;
@@ -112,9 +123,12 @@ const Category = styled.div`
     transition: 0.05s;
     user-select: none;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+    white-space: nowrap;
     ${({ theme }) => css`
         background-color: rgb(${theme.color.bodyLight});
         border: 1px solid rgb(${theme.color.border});
+        @media (max-width: ${theme.breakpoints.tablet}px) {
+        }
     `}
     ${({ active, color }) => active && css`
         background-color: #${color};

@@ -27,9 +27,12 @@ export const Container = styled.div`
     padding: 30px;
     width: 1200px;
     margin: 0 auto;
-    ${({ row, col }) => css`
+    ${({ row, col, theme }) => css`
         flex-direction: ${col && "column"};
         flex-direction: ${row && "row"};
+        @media (max-width: ${theme.breakpoints.tablet}px) {
+            width: 100%;
+        }
     `}
 `;
 
