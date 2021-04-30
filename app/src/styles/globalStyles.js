@@ -22,6 +22,18 @@ export const GlobalStyles = createGlobalStyle`
         color: rgb(235, 235, 235);
     }
 
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgb(15, 15, 15);
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: rgb(200, 200, 200);
+    }
+
     input,
     textarea {
         font: inherit;
