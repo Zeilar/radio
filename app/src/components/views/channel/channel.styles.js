@@ -8,8 +8,8 @@ export const Programs = styled.div`
     grid-gap: 15px;
     margin-top: 15px;
     ${({ theme }) => css`
-        @media (max-width: ${theme.breakpoints.tablet}px) {
-        
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            grid-template-columns: 1fr;
         }
     `}
 `;

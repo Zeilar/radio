@@ -89,12 +89,13 @@ const Sidebar = styled.aside`
     ${fadeIn}
     overflow: auto;
     position: unset;
-    display: block;
     transform: none;
     max-height: unset;
-    display: flex;
+    grid-gap: 5px;
     padding: 10px 0;
     margin-top: 15px;
+    grid-auto-flow: column;
+    display: grid;
     &::-webkit-scrollbar {
         width: 6px;
         height: 4px;
@@ -106,11 +107,10 @@ const Sidebar = styled.aside`
         border-radius: 20px;
     }
     @media (min-width: ${theme.breakpoints.desktop}px) {
+            grid-auto-flow: unset;
             transform: translateX(calc(-100% - 15px));
-            display: grid;
             position: fixed;
             max-height: 50vh;
-            grid-gap: 5px;
             padding: 0 5px;
             margin: 0;
         }
@@ -127,7 +127,8 @@ const Category = styled.div`
     ${({ theme }) => css`
         background-color: rgb(${theme.color.bodyLight});
         border: 1px solid rgb(${theme.color.border});
-        @media (max-width: ${theme.breakpoints.tablet}px) {
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            padding: 8px 12px;
         }
     `}
     ${({ active, color }) => active && css`

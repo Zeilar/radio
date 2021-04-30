@@ -73,26 +73,51 @@ export const Button = styled.button.attrs({ justify: "center", align: "center" }
 export const H1 = styled.h1`
     ${header}
     font-size: 3rem;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            font-size: 2.5rem;
+        }
+    `}
 `;
 
 export const H2 = styled.h2`
     ${header}
     font-size: 2.5rem;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            font-size: 2rem;
+        }
+    `}
 `;
 
 export const H3 = styled.h3`
     ${header}
     font-size: 2rem;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            font-size: 1.5rem;
+        }
+    `}
 `;
 
 export const H4 = styled.h4`
     ${header}
     font-size: 1.5rem;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            font-size: 1.25rem;      
+        }
+    `}
 `;
 
 export const H5 = styled.h5`
     ${header}
     font-size: 1.25rem;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            font-size: 1.15rem;
+        }
+    `}
 `;
 
 export const H6 = styled.h6`

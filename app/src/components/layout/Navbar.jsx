@@ -33,7 +33,9 @@ export default function Navbar() {
             <Nav as="nav">
                 <Brand>
                     <Brandlink>
-                        Angelin <BrandIcon /> Radio
+                        <BrandFragment>Angelin</BrandFragment>
+                        <BrandIcon />
+                        <BrandFragment>Radio</BrandFragment>
                     </Brandlink>
                 </Brand>
                 <Row as={Navlist}>
@@ -132,10 +134,6 @@ const navlink = css`
     `}
 `;
 
-const Navlink = styled(NavLink).attrs({ exact: true })`
-    ${navlink}
-`;
-
 const ModalButton = styled.button`
     ${navlink}
     background: none;
@@ -160,4 +158,19 @@ const BrandIcon = styled(Icon).attrs({ path: mdiRadio })`
     width: 1.25rem;
     height: 1.25rem;
     margin: auto 5px;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            margin: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    `}
+`;
+
+const BrandFragment = styled.span`
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            display: none;
+        }
+    `}
 `;
