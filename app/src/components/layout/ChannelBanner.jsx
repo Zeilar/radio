@@ -10,8 +10,6 @@ import Icon from '@mdi/react';
 export default function ChannelBanner({ channel, channelUrl }) {
     const { isLoggedIn, hasLikedChannel, likeChannel, unlikeChannel } = useContext(UserContext);
 
-    // console.log('has liked', channel?.id, hasLikedChannel(channel?.id));
-
     if (!channel) {
         return null;
     }
@@ -21,9 +19,9 @@ export default function ChannelBanner({ channel, channelUrl }) {
             return null;
         }
         if (!hasLikedChannel(channel.id)) {
-            return <LikeToggler onClick={() => likeChannel(channel.id)} path={mdiHeartOutline} />
+            return <LikeToggler onClick={() => likeChannel(channel.id)} path={mdiHeartOutline} title="Lägg till i favoriter" />
         }
-        return <LikeToggler onClick={() => unlikeChannel(channel.id)} path={mdiHeart} />
+        return <LikeToggler onClick={() => unlikeChannel(channel.id)} path={mdiHeart} title="Ta bort från favoriter" />
     }
 
     return (
@@ -117,4 +115,5 @@ const LikeToggler = styled(Icon)`
     height: 1.75rem;
     color: red;
     cursor: pointer;
+    margin-right: 10px;
 `;
