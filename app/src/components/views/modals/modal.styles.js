@@ -13,7 +13,6 @@ export const Content = styled(Col)`
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
     min-width: 500px;
     ${({ theme }) => css`
-        border: 2px solid rgb(${theme.color.brand});
         background-color: rgb(${theme.color.bodyLight});
     `}
 `;
@@ -54,9 +53,10 @@ export const RedirectWrapper = styled.p`
 export const RedirectLink = styled.span`
     text-decoration: underline;
     cursor: pointer;
+    user-select: none;
 `;
 
-export const InputRow = styled(Col)`
+export const InputRow = styled(Col).attrs({ align: "flex-start" })`
     margin-bottom: 30px;
 `;
 
@@ -66,11 +66,12 @@ export const Label = styled.label`
     cursor: text;
 `;
 
-export const Input = styled.input.attrs({ type: "text" })`
+export const Input = styled.input`
     border: 0;
     border-bottom: 1px solid rgb(${({ theme }) => theme.color.brand});
     outline: 0;
     padding: 4px 0;
+    width: 100%;
     &:focus {
         border-color: black;
     }
