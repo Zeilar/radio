@@ -26,10 +26,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/like', loggedIn, likeRoutes);
 
 // Serve the frontend if nothing else to do in the backend
-app.use(express.static(path.join(__dirname, 'build-ui')));
+app.use(express.static(path.join(__dirname, '../build-ui')));
 
 app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build-ui/index.html'));
+    res.sendFile(path.join(__dirname, '../build-ui/index.html'));
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
