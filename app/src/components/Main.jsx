@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styled, { css } from 'styled-components';
-import { Home, Channel, Programs } from "./views";
+import { Home, Channel } from "./views";
 import { Navbar, Player, ScrollToTop } from "./layout";
 import { Col, H1 } from "../components/styled-components";
 
@@ -12,7 +12,6 @@ export default function Main() {
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/kanal/:id/:name?" component={Channel} />
-                    <Route path="/program" exact component={Programs} />
                     <Route>
                         <NotFound>404 Not Found</NotFound>
                     </Route>
