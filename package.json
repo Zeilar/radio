@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "@babel/runtime": "^7.14.0",
+    "@babel/runtime-corejs2": "^7.14.0",
+    "@babel/runtime-corejs3": "^7.14.0",
     "@prisma/client": "^2.21.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
@@ -12,6 +16,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.14.0",
+    "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/preset-env": "^7.14.0",
     "@types/bcrypt": "^3.0.1",
     "@types/cors": "^2.8.10",
@@ -21,7 +26,7 @@
     "babel-polyfill": "^6.26.0"
   },
   "scripts": {
-    "build": "cross-env BABEL_ENV=cjs babel . --out-dir ./build --ignore \"app,build-ui,node_modules,migrations\" --presets=@babel/preset-env",
+    "build": "rm -rf ./build && cross-env BABEL_ENV=cjs babel . --out-dir ./build --ignore \"app,build-ui,node_modules,migrations\" --config-file ./.babelrc.js",
     "build:ui": "rm -rf ./build-ui && cd app && npm run build && cp -r build/ ../build-ui"
   }
 }

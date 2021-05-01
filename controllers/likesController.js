@@ -18,7 +18,7 @@ function unlikeProgram(req, res) {
 }
 
 async function like(req, res, resource) {
-    resource_id = Number(req.params.id);
+    const resource_id = Number(req.params.id);
     if (!resource_id) return status(400).end();
     try {
         const data = await prisma[`${resource}Likes`].findFirst({
@@ -43,7 +43,7 @@ async function like(req, res, resource) {
 }
 
 async function unlike(req, res, resource) {
-    resource_id = Number(req.params.id);
+    const resource_id = Number(req.params.id);
     if (!resource_id) return status(400).end();
     try {
         const data = await prisma[`${resource}Likes`].findFirst({
