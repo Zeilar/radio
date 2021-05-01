@@ -31,7 +31,8 @@ export const Container = styled.div`
         flex-direction: ${col && "column"};
         flex-direction: ${row && "row"};
         @media (max-width: ${theme.breakpoints.tablet}px) {
-            width: 100%;
+            width: calc(100% - 30px);
+            padding: 15px;
         }
     `}
 `;

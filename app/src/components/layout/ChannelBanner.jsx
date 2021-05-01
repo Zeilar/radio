@@ -15,7 +15,7 @@ export default function ChannelBanner({ channel, channelUrl }) {
     }
 
     function renderLikeToggler() {
-        if (!isLoggedIn || !channel) {
+        if (!isLoggedIn) {
             return null;
         }
         if (!hasLikedChannel(channel.id)) {
@@ -58,21 +58,39 @@ export default function ChannelBanner({ channel, channelUrl }) {
 const ChannelWrapper = styled(Row)`
     ${({ theme }) => css`
         background-color: rgb(${theme.color.body});
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            flex-direction: column;
+        }
     `}
 `;
 
 const ChannelContent = styled(Row).attrs({ align: "flex-end" })`
     height: 100px;
     flex: 1;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            
+        }
+    `}
 `;
 
 const ChannelMeta = styled(Col)`
     font-family: Roboto;
     margin-left: 10px;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            margin: 0;      
+        }
+    `}
 `;
 
 const ChannelIcon = styled.img`
     width: 100px;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            
+        }
+    `}
 `;
 
 const ChannelType = styled(H5)`

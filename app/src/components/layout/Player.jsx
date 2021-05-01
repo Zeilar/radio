@@ -74,15 +74,29 @@ const Wrapper = styled(Row).attrs({ justify: "center", align: "center" })`
     ${({ theme }) => css`
         background-color: rgb(${theme.color.bodyLight});
         border-top: 2px solid rgb(${theme.color.brand});
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            justify-content: space-between;
+        }
     `}
 `;
 
 const VolumeWrapper = styled(Row).attrs({ justify: "flex-end" })`
     width: 20rem;  
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            width: unset;
+            max-width: 10rem;
+        }
+    `}
 `;
 
 const VolumeSlider = styled.input.attrs({ type: "range", min: 0, max: 100 })`
     cursor: pointer;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            width: 100px;      
+        }
+    `}
 `;
 
 const VolumeIcon = styled(Icon)`
@@ -94,20 +108,41 @@ const VolumeIcon = styled(Icon)`
 
 const Controls = styled(Row).attrs({ justify: "center" })`
     margin: auto 30px;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            margin: 0;      
+        }
+    `}
 `;
 
 const Meta = styled(Col)`
     width: 20rem;
     white-space: nowrap;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            width: unset;
+            max-width: 10rem;
+        }
+    `}
 `;
 
 const Title = styled(H5)`
-    
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            white-space: normal;
+            text-align: right;      
+        }
+    `}
 `;
 
 const Description = styled.p`
     overflow: hidden;
     text-overflow: ellipsis;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            display: none;
+        }
+    `}
 `;
 
 const PlayerIcon = styled(Icon)`
@@ -116,6 +151,13 @@ const PlayerIcon = styled(Icon)`
     background: none;
     outline: 0;
     width: 2.5rem;
-    height: 2.5rem;
     user-select: none;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+        }
+    `}
 `;
