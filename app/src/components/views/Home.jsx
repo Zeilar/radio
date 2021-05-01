@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ChannelThumb from '../layout/ChannelThumb';
-import { Button, Col, Container, fadeIn, H1, H5, Row } from '../styled-components';
+import { Button, Container, fadeIn, H1, H5, Row } from '../styled-components';
 import { Loader } from '../layout';
 import useSRInfiniteQuery from '../../hooks/useSRInfiniteQuery';
 import { useContext, useEffect, useState } from 'react';
@@ -74,6 +74,11 @@ const Channels = styled.div`
     grid-gap: 30px;
     grid-template-columns: repeat(2, 1fr);
     width: 100%;
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            grid-template-columns: 1fr;
+        }
+    `}
 `;
 
 const Banner = styled(Row).attrs({ align: "baseline", justify: "space-between" })`

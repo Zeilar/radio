@@ -42,11 +42,22 @@ const ButtonWrapper = styled(Button)`
         transform: scale(0.5);
         pointer-events: none;
     `}
+    ${({ theme }) => css`
+        @media (max-width: ${theme.breakpoints.phone}px) {
+            min-width: unset;
+            bottom: 125px;
+            width: 2.5rem;
+            height: 2.5rem;
+            right: 15px;
+        }
+    `}
 `;
 
 const ButtonIcon = styled(Icon).attrs({ path: mdiChevronDown })`
     width: 2rem;
     height: 2rem;
     transform: rotate(180deg);
-    color: rgb(${({ theme }) => theme.color.textSecondary});
+    ${({ theme }) => css`
+        color: rgb(${theme.color.textSecondary});
+    `}
 `;
