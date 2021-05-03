@@ -60,21 +60,27 @@ async function register(req, res) {
         return res.status(400).end();
     }
     try {
-        const user = await prisma.user.findUnique({ where: { username } });
+        const user = await findUser({ username });
         if (user) {
             return res.status(422).json({ message: "User already exists" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const { id } = await prisma.user.create({
+        const createdUser = await prisma.user.create({
             data: {
                 username,
                 password: hashedPassword,
             },
+            include: {
+                channelLikes: true,
+                programLikes: true,
+            }
         });
-        req.session.user = id;
-        res.status(200).end();
+        req.session.user = createdUser.id;
+        delete createdUser.id;
+        delete createdUser.password;
+        res.json(createdUser);
     } catch (e) {
         console.error(e);
         res.status(500).end();
@@ -91,7 +97,7 @@ async function login(req, res) {
         return res.status(400).end();
     }
     
-    const user = await findUser({ username }, true);
+    const user = await findUser({ username });
     if (!user) {
         return res.status(422).json({ message: "User does not exist" });
     }
@@ -100,7 +106,6 @@ async function login(req, res) {
 
     if (match) {
         req.session.user = user.id;
-        delete user.password;
         res.json(user);
     } else {
         res.status(422).json({ message: "Incorrect password" });

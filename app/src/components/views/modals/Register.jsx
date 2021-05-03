@@ -34,6 +34,7 @@ export default function Login({ visible, close, openModal }) {
         e.preventDefault();
         setLoading(true);
         const success = await register({ username, password });
+        console.log(success);
         setLoading(false);
         if (success) {
             setUsername('');

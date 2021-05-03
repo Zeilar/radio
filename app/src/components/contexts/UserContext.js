@@ -64,7 +64,7 @@ export function UserContextProvider({ children }) {
         }
     }
 
-    async function likeOrUnlikeChannel(id, method) {
+    async function likeOrUnlikeChannel(id, method = "POST") {
         if (!id) return false;
         const response = await fetch(`http://localhost:3000/api/like/channel/${id}`, { method });
         if (response.status === 200) {
@@ -87,7 +87,9 @@ export function UserContextProvider({ children }) {
     }
 
     function hasLikedChannel(id) {
-        if (!user) return false;
+        if (!user || user.channelLikes.length <= 0) {
+            return false
+        }
         return user.channelLikes.includes(id);
     }
 
