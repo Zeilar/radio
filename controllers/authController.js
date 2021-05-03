@@ -97,7 +97,7 @@ async function login(req, res) {
         return res.status(400).end();
     }
     
-    const user = await findUser({ username });
+    const user = await findUser({ username }, true);
     if (!user) {
         return res.status(422).json({ message: "User does not exist" });
     }
@@ -106,6 +106,7 @@ async function login(req, res) {
 
     if (match) {
         req.session.user = user.id;
+        delete user.password;
         res.json(user);
     } else {
         res.status(422).json({ message: "Incorrect password" });
