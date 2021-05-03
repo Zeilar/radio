@@ -9,7 +9,7 @@ export function UserContextProvider({ children }) {
     useEffect(() => {
         (async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/auth");
+                const response = await fetch("/api/auth");
                 if (response.status === 200) {
                     const data = await response.json();
                     setUser(data);
@@ -30,7 +30,7 @@ export function UserContextProvider({ children }) {
 
     async function loginOrRegister(url, data) {
         try {
-            const response = await fetch(`http://localhost:3000/api/auth/${url}`, {
+            const response = await fetch(`/api/auth/${url}`, {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
@@ -58,7 +58,7 @@ export function UserContextProvider({ children }) {
 
     async function logout() {
         if (!user) return;
-        const { status } = await fetch('http://localhost:3000/api/auth/logout');
+        const { status } = await fetch('/api/auth/logout');
         if (status === 200) {
             setUser(null);
         }
@@ -66,7 +66,7 @@ export function UserContextProvider({ children }) {
 
     async function likeOrUnlikeChannel(id, method = "POST") {
         if (!id) return false;
-        const response = await fetch(`http://localhost:3000/api/like/channel/${id}`, { method });
+        const response = await fetch(`/api/like/channel/${id}`, { method });
         if (response.status === 200) {
             if (method === "POST") {
                 updateUser({ channelLikes: [ ...user.channelLikes, id ] })
