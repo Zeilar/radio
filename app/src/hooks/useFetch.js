@@ -27,11 +27,11 @@ export default function useFetch(url, args = {}) {
                 const response = await fetch(`${url}${parseQueryParams(args.params)}`, args.request);
                 const data     = await response.json();
                 setData(data);
+                setSuccess(true);
             } catch (e) {
                 console.error(e.message);
                 setError(e.message);
             } finally {
-                setSuccess(true);
                 setLoading(false);
             }
         })();
