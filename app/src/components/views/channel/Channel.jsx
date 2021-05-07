@@ -43,6 +43,13 @@ export default function Channel({ match }) {
                     >
                         Alla
                     </Category>
+                    <Category 
+                        onClick={() => setActiveCategory("favorites")} 
+                        active={activeCategory === "favorites"} 
+                        color={channel?.color}
+                    >
+                        Favoriter
+                    </Category>
                     {categoriesQuery.success && categoriesQuery.data.programcategories.map(category => (
                         <Category
                             key={category.id}
@@ -58,12 +65,7 @@ export default function Channel({ match }) {
             {channelQuery.loading && <Loader />}
             <Switch>
                 <Route path={`${match.url}/tabla`} exact>
-                    {channel && (
-                        <ChannelSchedule
-                            formatForUrl={formatForUrl}
-                            channel={channel}
-                        />
-                    )}
+                    {channel && <ChannelSchedule formatForUrl={formatForUrl} channel={channel} />}
                 </Route>
                 <Route>
                     {channel && (

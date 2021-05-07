@@ -9,7 +9,7 @@ export function UserContextProvider({ children }) {
     useEffect(() => {
         (async () => {
             try {
-                const response = await fetch("/api/auth");
+                const response = await fetch("http://localhost:3000/api/auth");
                 if (response.status === 200) {
                     const data = await response.json();
                     setUser(data);
@@ -30,7 +30,7 @@ export function UserContextProvider({ children }) {
 
     async function loginOrRegister(url, data) {
         try {
-            const response = await fetch(`/api/auth/${url}`, {
+            const response = await fetch(`http://localhost:3000/api/auth/${url}`, {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
@@ -58,7 +58,7 @@ export function UserContextProvider({ children }) {
 
     async function logout() {
         if (!user) return;
-        const { status } = await fetch('/api/auth/logout');
+        const { status } = await fetch('http://localhost:3000/api/auth/logout');
         if (status === 200) {
             setUser(null);
         }
@@ -66,12 +66,26 @@ export function UserContextProvider({ children }) {
 
     async function likeOrUnlikeChannel(id, method = "POST") {
         if (!id) return false;
-        const response = await fetch(`/api/like/channel/${id}`, { method });
+        const response = await fetch(`http://localhost:3000/api/like/channel/${id}`, { method });
         if (response.status === 200) {
             if (method === "POST") {
                 updateUser({ channelLikes: [ ...user.channelLikes, id ] })
             } else if (method === "DELETE") {
-                updateUser({ channelLikes: user.channelLikes.filter(channel => channel !== id) })
+                updateUser({ channelLikes: user.channelLikes.filter(channelId => channelId !== id) })
+            }
+            return true;
+        }
+        return false;
+    }
+
+    async function likeOrUnlikeProgram(id, method = "POST") {
+        if (!id) return false;
+        const { status } = await fetch(`http://localhost:3000/api/like/program/${id}`, { method });
+        if (status === 200) {
+            if (method === "POST") {
+                updateUser({ programLikes: [ ...user.programLikes, id ] })
+            } else if (method === "DELETE") {
+                updateUser({ programLikes: user.programLikes.filter(programId => programId !== id) })
             }
             return true;
         }
@@ -86,11 +100,27 @@ export function UserContextProvider({ children }) {
         likeOrUnlikeChannel(id, "DELETE");
     }
 
-    function hasLikedChannel(id) {
-        if (!user || user.channelLikes.length <= 0) {
-            return false
+    async function likeProgram(id) {
+        likeOrUnlikeProgram(id, "POST");
+    }
+    
+    async function unlikeProgram(id) {
+        likeOrUnlikeProgram(id, "DELETE");
+    }
+
+    function hasLikedChannelOrProgram(id, resource) {
+        if (!user || user[resource].length <= 0) {
+            return false;
         }
-        return user.channelLikes.includes(id);
+        return user[resource].includes(id);
+    }
+
+    function hasLikedChannel(id) {
+        return hasLikedChannelOrProgram(id, "channelLikes");
+    }
+    
+    function hasLikedProgram(id) {
+        return hasLikedChannelOrProgram(id, "programLikes");
     }
 
     const values = {
@@ -103,7 +133,10 @@ export function UserContextProvider({ children }) {
         register,
         likeChannel,
         unlikeChannel,
+        likeProgram,
+        unlikeProgram,
         hasLikedChannel,
+        hasLikedProgram,
     };
 
     return (
