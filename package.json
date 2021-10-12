@@ -1,4 +1,5 @@
 {
+    "main": "app.js",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@babel/runtime": "^7.14.0",
@@ -26,7 +27,9 @@
     "babel-polyfill": "^6.26.0"
   },
   "scripts": {
-    "build": "rm -rf ./build && cross-env BABEL_ENV=cjs babel . --out-dir ./build --ignore \"app,build-ui,node_modules,migrations\" --config-file ./.babelrc.js",
-    "build:ui": "rm -rf ./build-ui && cd app && npm run build && cp -r build/ ../build-ui"
+    "build": "rm -rf ./build && cross-env BABEL_ENV=cjs babel . --out-dir ./build --ignore \"app,build-ui,node_modules,migrations\" --config-file ./.babelrc.js && npm run build:ui",
+    "build:ui": "cd app && rm -rf ./build && npm run build && mv build ../build/ui",
+    "serve": "node build/app.js",
+    "serve:dev": "nodemon build/app.js"
   }
 }
