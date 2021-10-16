@@ -9,7 +9,7 @@ import ChannelProgram from './ChannelProgram';
 export default function ChannelPrograms({ channel, formatForUrl, activeCategory, setSidebarVisible }) {
     const { data, isLoading, refetch, isFetching } = useSRInfiniteQuery(
         `channel/${channel.id}/programs/${activeCategory}`,
-        "http://api.sr.se/api/v2/programs/index",
+        "https://api.sr.se/api/v2/programs/index",
         { channelid: channel.id, size: 30, programcategoryid: activeCategory },
     );
 
@@ -29,7 +29,7 @@ export default function ChannelPrograms({ channel, formatForUrl, activeCategory,
         }
         (async () => {
             const likedPrograms = await Promise.all(user.programLikes.map(async like => {
-                const response = await fetch(`http://api.sr.se/api/v2/programs/${like}?format=json&channelid=${channel.id}`);
+                const response = await fetch(`https://api.sr.se/api/v2/programs/${like}?format=json&channelid=${channel.id}`);
                 const { program } = await response.json();
                 return program;
             }));

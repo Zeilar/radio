@@ -7,7 +7,7 @@ import * as Styles from './channel.styles';
 export default function ChannelSchedule({ channel, formatForUrl }) {
     const { data, isSuccess, isLoading } = useSRInfiniteQuery(
         `channel/${channel.id}/tabla`,
-        "http://api.sr.se/api/v2/scheduledepisodes",
+        "https://api.sr.se/api/v2/scheduledepisodes",
         {
             channelid: channel.id,
             date: dayjs().format("YYYY-MM-DD"),

@@ -13,11 +13,11 @@ export default function Channel({ match }) {
     const [activeCategory, setActiveCategory] = useState(null);
     const [sidebarVisible, setSidebarVisible] = useState(false);
 
-    const channelQuery = useFetch(`http://api.sr.se/api/v2/channels/${id}`, {
+    const channelQuery = useFetch(`https://api.sr.se/api/v2/channels/${id}`, {
         params: { format: "json" },
     });
     
-    const categoriesQuery = useFetch("http://api.sr.se/api/v2/programcategories", {
+    const categoriesQuery = useFetch("https://api.sr.se/api/v2/programcategories", {
         params: {
             format: "json",
             pagination: false,

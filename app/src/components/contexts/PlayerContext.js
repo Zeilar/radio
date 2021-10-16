@@ -4,7 +4,7 @@ import useFetch from '../../hooks/useFetch';
 export const PlayerContext = createContext();
 
 export function PlayerContextProvider({ children }) {
-    const { data } = useFetch("http://api.sr.se/api/v2/channels/132", {
+    const { data } = useFetch("https://api.sr.se/api/v2/channels/132", {
         params: {
             format: "json",
         },

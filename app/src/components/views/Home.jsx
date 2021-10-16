@@ -14,7 +14,7 @@ export default function Home() {
         isLoading,
         hasNextPage,
         fetchNextPage
-    } = useSRInfiniteQuery("channels", "http://api.sr.se/api/v2/channels", { size: 30 });
+    } = useSRInfiniteQuery("channels", "https://api.sr.se/api/v2/channels", { size: 30 });
 
     const { user, isLoggedIn } = useContext(UserContext);
 
@@ -27,7 +27,7 @@ export default function Home() {
         }
         (async () => {
             const likedChannels = await Promise.all(user.channelLikes.map(async like => {
-                const response = await fetch(`http://api.sr.se/api/v2/channels/${like}?format=json`);
+                const response = await fetch(`https://api.sr.se/api/v2/channels/${like}?format=json`);
                 const { channel } = await response.json();
                 return channel;
             }));

@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import { HOST } from "../../config/server"
 
 export const UserContext = createContext();
 
@@ -9,7 +10,7 @@ export function UserContextProvider({ children }) {
     useEffect(() => {
         (async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/auth");
+                const response = await fetch(`${HOST}/api/auth`);
                 if (response.status === 200) {
                     const data = await response.json();
                     setUser(data);
@@ -30,7 +31,7 @@ export function UserContextProvider({ children }) {
 
     async function loginOrRegister(url, data) {
         try {
-            const response = await fetch(`http://localhost:3000/api/auth/${url}`, {
+            const response = await fetch(`${HOST}/api/auth/${url}`, {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
@@ -38,7 +39,7 @@ export function UserContextProvider({ children }) {
                 },
             });
             if (response.status !== 200) {
-                throw new Error();
+                throw new Error("Failed to login or register.");
             }
             const user = await response.json();
             setUser(user);
@@ -58,7 +59,7 @@ export function UserContextProvider({ children }) {
 
     async function logout() {
         if (!user) return;
-        const { status } = await fetch('http://localhost:3000/api/auth/logout');
+        const { status } = await fetch(`${HOST}/api/auth/logout`);
         if (status === 200) {
             setUser(null);
         }
@@ -66,7 +67,7 @@ export function UserContextProvider({ children }) {
 
     async function likeOrUnlikeChannel(id, method = "POST") {
         if (!id) return false;
-        const response = await fetch(`http://localhost:3000/api/like/channel/${id}`, { method });
+        const response = await fetch(`${HOST}/api/like/channel/${id}`, { method });
         if (response.status === 200) {
             if (method === "POST") {
                 updateUser({ channelLikes: [ ...user.channelLikes, id ] })
@@ -80,7 +81,7 @@ export function UserContextProvider({ children }) {
 
     async function likeOrUnlikeProgram(id, method = "POST") {
         if (!id) return false;
-        const { status } = await fetch(`http://localhost:3000/api/like/program/${id}`, { method });
+        const { status } = await fetch(`${HOST}/api/like/program/${id}`, { method });
         if (status === 200) {
             if (method === "POST") {
                 updateUser({ programLikes: [ ...user.programLikes, id ] })
