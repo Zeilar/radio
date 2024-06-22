@@ -16,6 +16,8 @@
         "sqlite3": "5.0.2"
     },
     "devDependencies": {
+        "@babel/cli": "^7.24.5",
+        "@babel/core": "^7.24.5",
         "@babel/plugin-transform-modules-commonjs": "7.14.0",
         "@babel/plugin-transform-runtime": "7.13.15",
         "@babel/preset-env": "7.14.0",
@@ -31,6 +33,7 @@
         "build:server": "rm -rf ./build && cross-env BABEL_ENV=cjs babel . --out-dir ./build --ignore \"node_modules,app,migrations\" --config-file ./.babelrc.js",
         "build:ui": "cd app && rm -rf ./build && npm run build && mv build ../build/ui",
         "serve": "node build/app.js",
-        "serve:dev": "nodemon build/app.js"
+        "serve:dev": "nodemon build/app.js",
+        "prisma:generate": "prisma generate"
     }
 }
